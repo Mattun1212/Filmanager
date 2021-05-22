@@ -1,7 +1,7 @@
 default_env: &default
   adapter: postgresql
   encoding: unicode
-  database: ld13_day4_test_sample
+  database: ld13_day5_test
 
 development:
   <<: *default
