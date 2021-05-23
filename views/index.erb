@@ -14,11 +14,14 @@
 	</form>
 	<%@numbers.each do |number|%>
 	<form action="/edit/<%=number.id%>" method="post">
-	  <div class="container">
+	<div class="container">
 		<div><input type="text" value="<%=number.title%>" name="title" class="text"></div>
 		<div><input type="submit" value="編集" class="button"></div>
-	  </div>
 	</form>
+	<form action="/delete/<%=number.id%>" method="post">
+		<div><input type="submit" value="削除" class="button"></div>
+	</form>
+	</div>
 	<h1><%=number.number%></h1>
 	<form action="/plus/<%=number.id%>" method="post">
 		<input type="submit" value="+">

@@ -28,6 +28,11 @@ post '/edit/:id' do
   redirect '/count'
 end
 
+post '/delete/:id' do
+  Count.destroy(params[:id])
+  redirect '/count'
+end
+
 post '/plus/:id' do
   count = Count.find(params[:id])
   count.number = count.number + 1
