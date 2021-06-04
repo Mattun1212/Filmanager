@@ -1,4 +1,3 @@
-require './scraping_on_screen.rb'
 module Everyday
  def self.update_on_screen_data
     @theaters=Theater.all

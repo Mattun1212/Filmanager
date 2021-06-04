@@ -108,7 +108,6 @@ end
 
 post '/delete/:id' do
   if session[:user]
-    theaters = Theater.all
     theater = params[:theater]
     id = Movie.find_by(movie_id: params[:id], theater: theater).id
     Subscription.find_by(user_id: session[:user], movie_id: id).destroy
