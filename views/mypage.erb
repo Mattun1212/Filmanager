@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>mypage</title>
+</head>
+<body>
+<% unless session[:user] %>
+<a href="/signin">ログイン</a> <a href="/signup">新規登録</a><br> <h2>未ログイン</h2>
+<% else %>
+<a href="/signout">ログアウト</a>
+<a href="/">戻る</a>
+<h2><%= User.find(session[:user]).name %>としてログイン</h2>
+<h3>登録した映画</h3>
+<ul>
+<% @my_movies.each do |movie| %>
+<li>
+	<a href="/movie/<%=movie[1]%>"><%= movie[0] %>(<%=Theater.find_by(name: movie[2]).official%>)
+	<% if movie[3].present? %>
+		<%=movie[3]%>終了
+	<% end %></a>
+	<form action="/delete/<%=movie[1]%>" method="post">
+		<input type="hidden" name="theater" value="<%=movie[2]%>">
+		<input type="submit" value="削除">
+	</form>
+</li>
+<% end %>
+</ul>
+<% end %>
+</body>
+</html>

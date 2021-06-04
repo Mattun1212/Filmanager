@@ -2,69 +2,164 @@ require 'bundler/setup'
 Bundler.require
 require 'sinatra/reloader' if development?
 require './models.rb'
+require './scraping_on_screen.rb'
+require './update_on_screen.rb'
+# require './scraping_movie.rb'
+require 'csv'
+Dotenv.load
+enable :sessions
 
-before do
-  if Count.count == 0
-    Count.create(number: 0, title: "一個目")
+def client
+  @client ||= Line::Bot::Client.new { |config|
+    config.channel_id = ENV["LINE_CHANNEL_ID"]
+    config.channel_secret = ENV["LINE_CHANNEL_SECRET"]
+    config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
+  }
+end
+
+# before do
+#   Everyday.update_on_screen_data
+# end
+
+post '/callback' do
+  body = request.body.read
+  signature = request.env['HTTP_X_LINE_SIGNATURE']
+  unless client.validate_signature(body, signature)
+    error 400 do 'Bad Request' end
+  end
+  events = client.parse_events_from(body)
+  events.each do |event|
+    if event.is_a?(Line::Bot::Event::Message)
+      if event.type === Line::Bot::Event::MessageType::Text
+        message = {
+          type: 'text',
+          text: event.message['text']
+        }
+        client.reply_message(event['replyToken'], message)
+      end
+    end
+  end
+  "OK"
+end
+
+
+
+get '/' do
+  unless session[:user] 
+    erb :top
+  else
+    @theaters = Theater.all
+    @theater = User.find(session[:user]).my_theater
+    # url='https://www.unitedcinemas.jp/'+@theater+'/daily.php'
+    # @movies = Scraping_on_screen.load_schedule_data(url)
+    # @movies.each do |movie|
+    #   unless Movie.find_by(title: movie[0],theater: @theater)
+    #   Movie.create(title: movie[0], movie_id: movie[1], theater: @theater)
+    #   end
+    #   if movie[2]
+    #     Movie.find_by(title: movie[0]).update(finish: movie[2])
+    #   end
+    # end
+    @movies=[]
+    CSV.foreach("Today_on_screen.csv") do |row|
+      if row[3] == @theater
+        @movies.push(row)
+      end
+    end
+    erb :index
   end
 end
 
-get '/' do
-  redirect '/count'
+post '/index' do
+  @theaters = Theater.all
+  @theater = params[:theater]
+  @movies=[]
+    CSV.foreach("Today_on_screen.csv") do |row|
+      if row[3] == @theater
+        @movies.push(row)
+      end
+    end
+    erb :index
 end
 
-get '/count' do
-  @numbers=Count.all.order("id desc")
+get '/movie/:id' do
+   url='https://www.unitedcinemas.jp/all/film.php?film='+params[:id]
+   @movies = Scraping_movie.load_movie_data(url)
+   erb :movie
+end
+
+post '/add/:id' do
+  if session[:user]
+    @theaters = Theater.all
+    @theater = params[:theater]
+    id = Movie.find_by(movie_id: params[:id], theater: @theater).id
+    unless Subscription.find_by(user_id: session[:user], movie_id: id)
+      Subscription.create(user_id: session[:user], movie_id: id, theater: @theater)
+    end
+  end
+  @movies=[]
+    CSV.foreach("Today_on_screen.csv") do |row|
+      if row[3] == @theater
+        @movies.push(row)
+      end
+    end
   erb :index
 end
 
-post '/create' do
-  Count.create(number: 0, title: params[:title])
-  redirect '/count'
-end
-
-post '/edit/:id' do
-  Count.find(params[:id]).update(title: params[:title])
-  redirect '/count'
-end
-
 post '/delete/:id' do
-  Count.destroy(params[:id])
-  redirect '/count'
+  if session[:user]
+    theaters = Theater.all
+    theater = params[:theater]
+    id = Movie.find_by(movie_id: params[:id], theater: theater).id
+    Subscription.find_by(user_id: session[:user], movie_id: id).destroy
+  end
+  redirect '/mypage'
 end
 
-post '/plus/:id' do
-  count = Count.find(params[:id])
-  count.number = count.number + 1
-  count.save
-  redirect '/count'
+get '/mypage' do
+  if session[:user]
+    @my_movies = []
+    subscriptions = User.find(session[:user]).movies
+    subscriptions.each do |subscription|
+     movie_param=[subscription.title, subscription.movie_id, subscription.theater, subscription.finish]
+     @my_movies.append(movie_param)
+    end
+    erb :mypage
+  end
 end
 
-post '/minus/:id' do
-  count = Count.find(params[:id])
-  count.number = count.number - 1
-  count.save
-  
-  redirect '/count'
+get '/signin' do
+   erb :sign_in 
 end
 
-post '/multi/:id' do
-  count = Count.find(params[:id])
-  count.number = count.number * 2
-  count.save
-  redirect '/count'
+get '/signup' do
+   @theaters = Theater.all
+   erb :sign_up
 end
 
-post '/div/:id' do
-  count = Count.find(params[:id])
-  count.number = count.number / 2
-  count.save
-  redirect '/count'
+post '/signin' do
+   user = User.find_by(mail: params[:mail])
+   if user && user.authenticate(params[:password])
+        session[:user] = user.id
+   else
+      redirect '/signin'
+   end
+   redirect '/'
 end
 
-post '/clear/:id' do
-  count = Count.find(params[:id])
-  count.number = 0
-  count.save
-  redirect '/count'
+post '/signup' do
+  unless User.find_by(mail: params[:mail])
+    @user = User.create(name: params[:name], mail: params[:mail], my_theater: params[:theater], password: params[:password], password_confirmation: params[:password_confirmation])
+    if @user.persisted?
+        session[:user] = @user.id
+    end
+    redirect '/'
+  else
+    redirect '/signup'
+  end
+end
+
+get '/signout' do
+  session[:user] = nil
+  redirect '/'
 end

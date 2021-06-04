@@ -2,46 +2,41 @@
 <html lang="ja">
 <head>
 	<meta charset="UTF-8">
-	<title>リーダーズ13th確認テスト</title>
-	<link rel="stylesheet" href="/assets/css/count.css">
+	<title>index</title>
 </head>
 <body>
-	<form action="/create" method="post">
-	  <div class="container">
-		<div><input type="text" name="title" class="text"></div>
-		<div><input type="submit" value="追加" class="button"></div>
-	  </div>
-	</form>
-	<%@numbers.each do |number|%>
-	<form action="/edit/<%=number.id%>" method="post">
-	<div class="container">
-		<div><input type="text" value="<%=number.title%>" name="title" class="text"></div>
-		<div><input type="submit" value="編集" class="button"></div>
-	</form>
-	<form action="/delete/<%=number.id%>" method="post">
-		<div><input type="submit" value="削除" class="button"></div>
-	</form>
+	<% unless session[:user] %>
+	<a href="/signin">ログイン</a> <a href="/signup">新規登録</a><br> <h2>未ログイン</h2>
+	<% else %>
+	<a href="/signout">ログアウト</a>
+	<h2><%= User.find(session[:user]).name %>としてログイン</h2>
+	<h3>
+		<form action="/index" method="post">
+		<select name="theater" onchange="submit(this.form)">
+			<% @theaters.each do |theater| %>
+				<%if theater.name == @theater%>
+					<option value="<%= theater.name %>" selected><%= theater.official %></option>
+				<%else%>
+					<option value="<%= theater.name %>"><%= theater.official %></option>
+				<% end %>
+			<% end %>
+		</select>
+		</form>
+	で上映中の映画</h3>
+	<a href="/mypage">マイページへ</a>
+	<%@movies.each do |movie|%>
+	<div>
+		<p><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>"><%=movie[0]%>
+		<% if movie[2].present? %>
+			<%=movie[2]%>終了
+		<% end %>
+		</a></p>
+		<form action="/add/<%=movie[1]%>" method="post">
+			<input type="hidden" name="theater" value="<%=@theater%>">
+			<input type="submit" value="追加">
+		</form>
 	</div>
-	<h1><%=number.number%></h1>
-	<form action="/plus/<%=number.id%>" method="post">
-		<input type="submit" value="+">
-	</form>
-	
-	<form action="/minus/<%=number.id%>" method="post">
-		<input type="submit" value="-">
-	</form>
-	
-	<form action="/multi/<%=number.id%>" method="post">
-		<input type="submit" value="×2">
-	</form>
-	
-	<form action="/div/<%=number.id%>" method="post">
-		<input type="submit" value="÷2">
-	</form>
-	
-	<form action="/clear/<%=number.id%>" method="post">
-		<input type="submit" value="clear">
-	</form>
-	<%end%>
+	<% end %>
+	<% end %>
 </body>
 </html>
