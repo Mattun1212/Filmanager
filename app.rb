@@ -47,11 +47,11 @@ post '/callback' do
             text: 'ユーザが見つけられませんでした'
             })
           else
-           user.update(line_id: userId)
+           user.update(line_id: event['source']['userId'])
            user.save
             message.push({
               type: 'text',
-              text: user.name+'さん、よろしくお願いします。'+userId
+              text: user.name+'さん、よろしくお願いします。'
             })
           end
          else
@@ -68,8 +68,13 @@ post '/callback' do
               reply.push(subscription.title)
             end
             message.push({
-            type: 'text',
-            text: reply
+              type: 'text',
+              text: reply
+            })
+          else
+            message.push({
+              type: 'text',
+              text: event.message['text']
             })
           end
         end
