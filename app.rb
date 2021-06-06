@@ -48,6 +48,7 @@ post '/callback' do
             })
           else
             user.update(line_id: userId)
+            user.save
             message.push({
               type: 'text',
               text: user.name+'さん、よろしくお願いします。'
