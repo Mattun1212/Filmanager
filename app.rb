@@ -60,7 +60,7 @@ post '/callback' do
           })
          end
         else
-          if event.message['text']='登録した映画'
+          if event.message['text'] == '登録した映画'
             reply=[]
             subscriptions = User.find_by(line_id: userId).movies
             subscriptions.each do |subscription|
