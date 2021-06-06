@@ -11,7 +11,7 @@ if Theater.count == 0
     {official: 'ユナイテッド・シネマ ウニクス南古谷', name: 'minamifuruya'},
     {official: 'ユナイテッド・シネマ 春日部', name: 'kasukabe'},
     {official: 'ユナイテッド・シネマ 入間', name: 'iruma'},
-    {official: 'シネプレックス新座', name: 'niza'},
+    {official: 'シネプレックス 新座', name: 'niza'},
     {official: 'ユナイテッド・シネマ 幸手', name: 'satte'},
     {official: 'ユナイテッド・シネマ わかば', name: 'wakaba'},
     {official: 'ユナイテッド・シネマ ウニクス上里', name: 'kamisato'},
