@@ -14,6 +14,7 @@ gem 'webrick', '~> 1.7'
 gem 'nokogiri'
 gem 'open-uri'
 gem 'omniauth-line'
+gem "line-bot-api"
 
 group :development do
   gem 'debase'
