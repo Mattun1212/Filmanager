@@ -39,12 +39,12 @@ post '/callback' do
         message=[]
         if varidate_email(event.message['text'])
           user=User.find_by(mail: event.message['text'])
-          messages.push({
+          message.push({
             type: 'text',
             text: user.name
           })
         else
-          messages.push({
+          message.push({
             type: 'text',
             text: 'ユーザが見つかりません'
           })
