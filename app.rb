@@ -66,7 +66,7 @@ post '/callback' do
             subscriptions.each do |subscription|
               reply.push(subscription.title)
             end
-            replyis=reply.join('\n')
+            replyis=reply.join("\n")
             message.push({
               type: 'text',
               text: replyis
