@@ -37,18 +37,25 @@ post '/callback' do
     if event.is_a?(Line::Bot::Event::Message)
       if event.type === Line::Bot::Event::MessageType::Text
         message=[]
-        if varidate_email(event.message['text'])
+        # if varidate_email(event.message['text']) == true
           user=User.find_by(mail: event.message['text'])
-          message.push({
+          if user.present
+            message.push({
+              type: 'text',
+              text: user.name
+            })
+          else
+            message.push({
             type: 'text',
-            text: user.name
-          })
-        else
-          message.push({
-            type: 'text',
-            text: 'ユーザが見つかりません'
-          })
-        end
+            text: 'メールアドレスを入力してください'
+            })
+          end
+        # else
+        #   message.push({
+        #     type: 'text',
+        #     text: 'メールアドレスを入力してください'
+        #   })
+        # end
         client.reply_message(event['replyToken'], message)
       end
     end
