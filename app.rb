@@ -25,40 +25,40 @@ def varidate_email(address)
 end
 
 
-post '/callback' do
-  body = request.body.read
-  signature = request.env['HTTP_X_LINE_SIGNATURE']
-  unless client.validate_signature(body, signature)
-    error 400 do 'Bad Request' end
-  end
-  events = client.parse_events_from(body)
-  events.each do |event|
-    userId = event['source']['userId']
-    if event.is_a?(Line::Bot::Event::Message)
-      if event.type === Line::Bot::Event::MessageType::Text
-        message=[]
-        # if varidate_email(event.message['text']) == true
-          user=User.find_by(mail: event.message['text'])
-          if user.present
-            message.push({
-              type: 'text',
-              text: user.name
-            })
-          else
-            message.push({
-            type: 'text',
-            text: 'メールアドレスを入力してください'
-            })
-          end
-        # else
-        #   message.push({
-        #     type: 'text',
-        #     text: 'メールアドレスを入力してください'
-        #   })
-        # end
-        client.reply_message(event['replyToken'], message)
-      end
-    end
+# post '/callback' do
+#   body = request.body.read
+#   signature = request.env['HTTP_X_LINE_SIGNATURE']
+#   unless client.validate_signature(body, signature)
+#     error 400 do 'Bad Request' end
+#   end
+#   events = client.parse_events_from(body)
+#   events.each do |event|
+#     userId = event['source']['userId']
+#     if event.is_a?(Line::Bot::Event::Message)
+#       if event.type === Line::Bot::Event::MessageType::Text
+#         message=[]
+#         # if varidate_email(event.message['text']) == true
+#           user=User.find_by(mail: event.message['text'])
+#           if user.present
+#             message.push({
+#               type: 'text',
+#               text: user.name
+#             })
+#           else
+#             message.push({
+#             type: 'text',
+#             text: 'メールアドレスを入力してください'
+#             })
+#           end
+#         # else
+#         #   message.push({
+#         #     type: 'text',
+#         #     text: 'メールアドレスを入力してください'
+#         #   })
+#         # end
+#         client.reply_message(event['replyToken'], message)
+#       end
+#     end
   end
   "OK"
 end
