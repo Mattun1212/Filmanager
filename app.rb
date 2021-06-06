@@ -33,11 +33,13 @@ post '/callback' do
   end
   events = client.parse_events_from(body)
   events.each do |event|
-    # userId = event['source']['userId']
+    userId = event['source']['userId']
     if event.is_a?(Line::Bot::Event::Message)
       if event.type === Line::Bot::Event::MessageType::Text
         message=[]
-        if varidate_email(event.message['text'])
+        uid=User.find_by(line_id: userId)
+        if uid.nil?
+         if varidate_email(event.message['text'])
           user=User.find_by(mail: event.message['text'])
           if user.nil?
             message.push({
@@ -45,16 +47,30 @@ post '/callback' do
             text: 'ユーザが見つけられませんでした'
             })
           else
+            user.update(line_id: userId)
             message.push({
               type: 'text',
-              text: user.name
+              text: user.name+'さん、よろしくお願いします。'
             })
           end
-        else
+         else
           message.push({
             type: 'text',
             text: 'メールアドレスを入力してください'
           })
+         end
+        else
+          if event.message['text']='登録した映画'
+            reply=[]
+            subscriptions = User.find_by(line_id: userId).movies
+            subscriptions.each do |subscription|
+              reply.push(subscription.title)
+            end
+            message.push({
+            type: 'text',
+            text: reply
+            })
+          end
         end
         client.reply_message(event['replyToken'], message)
       end
