@@ -33,21 +33,21 @@ post '/callback' do
   end
   events = client.parse_events_from(body)
   events.each do |event|
-    userId = event['source']['userId']
+    # userId = event['source']['userId']
     if event.is_a?(Line::Bot::Event::Message)
       if event.type === Line::Bot::Event::MessageType::Text
         message=[]
         # if varidate_email(event.message['text'])
           user=User.find_by(mail: event.message['text'])
-          if user.present
-            message.push({
-              type: 'text',
-              text: user.name
-            })
-          else
+          if user.nil?
             message.push({
             type: 'text',
             text: 'ユーザが見つけられませんでした'
+            })
+          else
+            message.push({
+              type: 'text',
+              text: user.name
             })
           end
         # else
