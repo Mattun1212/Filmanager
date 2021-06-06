@@ -47,7 +47,7 @@ post '/callback' do
             text: 'ユーザが見つけられませんでした'
             })
           else
-           user.update!(line_id: event['source']['userId'])
+           user.update(line_id: event['source']['userId'])
            user.save
             message.push({
               type: 'text',
