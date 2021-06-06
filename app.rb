@@ -17,9 +17,13 @@ def client
   }
 end
 
-# before do
-#   Everyday.update_on_screen_data
-# end
+def varidate_email(address)
+  if address.match(/\A.+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+\z/)
+    return true
+  else
+    return false
+end
+
 
 post '/callback' do
   body = request.body.read
@@ -29,12 +33,22 @@ post '/callback' do
   end
   events = client.parse_events_from(body)
   events.each do |event|
+    userId = event['source']['userId']
     if event.is_a?(Line::Bot::Event::Message)
       if event.type === Line::Bot::Event::MessageType::Text
-        message = {
-          type: 'text',
-          text: event.message['text']
-        }
+        message=[]
+        if varidate_email(event.message['text'])
+          user=User.find_by(mail: event.message['text'])
+          messages.push({
+            type: 'text',
+            text: user.name
+          })
+        else
+          messages.push({
+            type: 'text',
+            text: 'ユーザが見つかりません'
+          })
+        end
         client.reply_message(event['replyToken'], message)
       end
     end
