@@ -47,7 +47,8 @@ post '/callback' do
             text: 'ユーザが見つけられませんでした'
             })
           else
-            User.find_by(mail: event.message['text']).update(line_id: userId)
+           user.update(line_id: userId)
+           user.save
             message.push({
               type: 'text',
               text: user.name+'さん、よろしくお願いします。'
