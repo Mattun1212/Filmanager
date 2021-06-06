@@ -51,7 +51,7 @@ post '/callback' do
            user.save
             message.push({
               type: 'text',
-              text: user.name+'さん、よろしくお願いします。'+event['source']['userId'].text
+              text: user.name+'さん、よろしくお願いします。'
             })
           end
          else
