@@ -1,6 +1,7 @@
 module Everyday
  def self.update_on_screen_data
     @theaters=Theater.all
+    Today.destroy_all
     headers = %w[title movie_id finish theater]
     CSV.open('Today_on_screen.csv', 'w') { |csv| csv << headers }
     @theaters.each do |theater|
@@ -17,9 +18,7 @@ module Everyday
     
     @movies.each do |movie|
         movie[3]=theater.name
-        add=CSV.open('Today_on_screen.csv', 'a:utf-8')
-        add.puts movie
-        add.close
+        Today.create(title: movie[0], movie_id: movie[1], finish: movie[2] ,theater: movie[3])
     end
     end
  end

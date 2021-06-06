@@ -61,9 +61,11 @@ get '/' do
     #   end
     # end
     @movies=[]
-    CSV.foreach("Today_on_screen.csv") do |row|
-      if row[3] == @theater
-        @movies.push(row)
+    todays = Today.all
+    todays.each do |today|
+      if today.theater == @theater
+      row = [today.title, today.movie_id, today.finish, @theater]
+      @movies.push(row)
       end
     end
     erb :index
@@ -74,12 +76,14 @@ post '/index' do
   @theaters = Theater.all
   @theater = params[:theater]
   @movies=[]
-    CSV.foreach("Today_on_screen.csv") do |row|
-      if row[3] == @theater
-        @movies.push(row)
+  todays = Today.all
+  todays.each do |today|
+      if today.theater == @theater
+       row = [today.title, today.movie_id, today.finish, @theater]
+       @movies.push(row)
       end
-    end
-    erb :index
+  end
+  erb :index
 end
 
 get '/movie/:id' do
@@ -98,12 +102,14 @@ post '/add/:id' do
     end
   end
   @movies=[]
-    CSV.foreach("Today_on_screen.csv") do |row|
-      if row[3] == @theater
-        @movies.push(row)
+   todays = Today.all
+    todays.each do |today|
+      if today.theater == @theater
+      row = [today.title, today.movie_id, today.finish, @theater]
+      @movies.push(row)
       end
     end
-  erb :index
+    erb :index
 end
 
 post '/delete/:id' do

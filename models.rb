@@ -25,3 +25,6 @@ class Subscription < ActiveRecord::Base
     belongs_to :movie , foreign_key: :movie_id
     belongs_to :user
 end
+
+class Today < ActiveRecord::Base
+end
