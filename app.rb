@@ -70,7 +70,6 @@ post '/callback' do
             message.push({
               type: 'text',
               text: replyis
-              end
             })
           else
             message.push({
