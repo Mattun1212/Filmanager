@@ -68,7 +68,7 @@ post '/callback' do
             end
             message.push({
               type: 'text',
-              text: reply
+              text: reply[0]
             })
           else
             message.push({
