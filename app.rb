@@ -37,7 +37,7 @@ post '/callback' do
     if event.is_a?(Line::Bot::Event::Message)
       if event.type === Line::Bot::Event::MessageType::Text
         message=[]
-        uid=User.find_by(line_id: userId)
+        uid=User.find_by(line_id: event['source']['userId'])
         if uid.nil?
          if varidate_email(event.message['text'])
           user=User.find_by(mail: event.message['text'])
@@ -51,7 +51,7 @@ post '/callback' do
            user.save
             message.push({
               type: 'text',
-              text: user.name+'さん、よろしくお願いします。'
+              text: user.name+'さん、よろしくお願いします。'+event['source']['userId'].text
             })
           end
          else
