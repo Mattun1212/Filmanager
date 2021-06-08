@@ -6,41 +6,42 @@
 </head>
 <body>
 	<% unless session[:user] %>
-	<a href="/signin">ログイン</a> <a href="/signup">新規登録</a><br> <h2>未ログイン</h2>
+		<a href="/signin">ログイン</a> <a href="/signup">新規登録</a><br> <h2>未ログイン</h2>
 	<% else %> 
-	<% if User.find(session[:user]).line_id.present? %>
-	<a href="/signout">ログアウト</a>
-	<h2><%= User.find(session[:user]).name %>としてログイン</h2>
-	<h3>
-		<form action="/index" method="post">
-		<select name="theater" onchange="submit(this.form)">
-			<% @theaters.each do |theater| %>
-				<%if theater.name == @theater%>
-					<option value="<%= theater.name %>" selected><%= theater.official %></option>
-				<% else %>
-					<option value="<%= theater.name %>"><%= theater.official %></option>
+		<% if User.find(session[:user]).line_id.present? %>
+			<a href="/signout">ログアウト</a>
+			<h2><%= User.find(session[:user]).name %>としてログイン</h2>
+			<h3>
+				<form action="/index" method="post">
+				<select name="theater" onchange="submit(this.form)">
+						<% @theaters.each do |theater| %>
+							<%if theater.name == @theater%>
+								<option value="<%= theater.name %>" selected><%= theater.official %></option>
+							<% else %>
+								<option value="<%= theater.name %>"><%= theater.official %></option>
+							<% end %>
+						<% end %>
+				</select>
+				</form>
+			で上映中の映画</h3>
+			<a href="/mypage">マイページへ</a>
+			<%@movies.each do |movie|%>
+		 	<div>
+				<p><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>"><%=movie[0]%>
+				<% if movie[2].present? %>
+					<%=movie[2]%>終了
 				<% end %>
+				</a></p>
+				<form action="/add/<%=movie[1]%>" method="post">
+					<input type="hidden" name="theater" value="<%=@theater%>">
+					<input type="submit" value="追加">
+				</form>
+			</div>
 			<% end %>
-		</select>
-		</form>
-	で上映中の映画</h3>
-	<a href="/mypage">マイページへ</a>
-	<%@movies.each do |movie|%>
-	<div>
-		<p><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>"><%=movie[0]%>
-		<% if movie[2].present? %>
-			<%=movie[2]%>終了
-		<% end %>
-		</a></p>
-		<form action="/add/<%=movie[1]%>" method="post">
-			<input type="hidden" name="theater" value="<%=@theater%>">
-			<input type="submit" value="追加">
-		</form>
-	</div>
-	<% else %>
-		<div>lineを登録し、ユーザ認証をしてください</div>
-		<img src='./QR.png' width="384" height="384" alt='lineQR'>
-	<% end %>
+		<% else %>
+			<div>lineを登録し、ユーザ認証をしてください</div>
+			<img src='./QR.png' width="384" height="384" alt='lineQR'>
+		<% end %>	
 	<% end %>
 </body>
 </html>
