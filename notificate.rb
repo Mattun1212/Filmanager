@@ -1,3 +1,4 @@
+require 'sinatra/activerecord'
 require './models.rb'
 Dotenv.load
 require 'line/bot'
