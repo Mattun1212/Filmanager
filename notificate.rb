@@ -16,7 +16,7 @@ users=User.all
 users.each do |user|
     if user.line_id.present?
         user_id = user.line_id
-        subscriptions=User.find_by(line_id).movies
+        subscriptions=User.find_by(line_id: user_id).movies
         subscriptions.each do |subscription|
          if subscription.finish.present?
             finish=subscription.finish+'終了'
