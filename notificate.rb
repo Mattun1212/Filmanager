@@ -20,7 +20,7 @@ users.each do |user|
         subscriptions.each do |subscription|
          if subscription.finish.present?
             finish=subscription.finish+'終了'
-            theater='('+subscription.theater+')'
+            theater='('+ Theater.find_by(name: subscription.theater).official+')'
             content = subscription.title+theater+finish
             message = {
                         type: 'text',
