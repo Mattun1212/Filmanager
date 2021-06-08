@@ -18,7 +18,8 @@ users.each do |user|
         subscriptions.each do |subscription|
          if subscription.finish.present?
             finish=subscription.finish+'終了'
-            content = subscription.title+finish
+            theater='('+subscription.theater+')'
+            content = subscription.title+theater+finish
             message = {
                         type: 'text',
                         text: content+'の公開終了時期が迫っています！！'
