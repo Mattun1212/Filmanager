@@ -21,10 +21,10 @@ users.each do |user|
          if subscription.finish.present?
             finish=subscription.finish+'終了'
             theater='('+ Theater.find_by(name: subscription.theater).official+')'
-            content = subscription.title+theater+finish
+            content = +theater+finish
             message = {
                         type: 'text',
-                        text: content+'の公開終了時期が迫っています！！'
+                        text: subscription.title+'の公開終了時期が迫っています！！'+content
                       }
             client.push_message(user_id, message)
          end
