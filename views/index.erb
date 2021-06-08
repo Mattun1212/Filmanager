@@ -17,7 +17,7 @@
 			<% @theaters.each do |theater| %>
 				<%if theater.name == @theater%>
 					<option value="<%= theater.name %>" selected><%= theater.official %></option>
-				<%else%>
+				<% else %>
 					<option value="<%= theater.name %>"><%= theater.official %></option>
 				<% end %>
 			<% end %>
@@ -37,7 +37,6 @@
 			<input type="submit" value="追加">
 		</form>
 	</div>
-	<% end %>
 	<% else %>
 		<div>lineを登録し、ユーザ認証をしてください</div>
 		<img src='./QR.png' width="384" height="384" alt='lineQR'>
