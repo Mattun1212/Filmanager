@@ -5,7 +5,6 @@ require './models.rb'
 require './scraping_on_screen.rb'
 require './update_on_screen.rb'
 # require './scraping_movie.rb'
-require 'csv'
 Dotenv.load
 enable :sessions
 
