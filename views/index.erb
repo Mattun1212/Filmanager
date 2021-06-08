@@ -7,7 +7,8 @@
 <body>
 	<% unless session[:user] %>
 	<a href="/signin">ログイン</a> <a href="/signup">新規登録</a><br> <h2>未ログイン</h2>
-	<% else %>
+	<% else %> 
+	<% if User.find(session[:user]).line_id.present? %>
 	<a href="/signout">ログアウト</a>
 	<h2><%= User.find(session[:user]).name %>としてログイン</h2>
 	<h3>
@@ -37,6 +38,9 @@
 		</form>
 	</div>
 	<% end %>
+	<% else %>
+		<div>lineを登録し、ユーザ認証をしてください</div>
+		<img src='./QR.png'>
 	<% end %>
 </body>
 </html>

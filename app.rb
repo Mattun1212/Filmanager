@@ -61,15 +61,15 @@ post '/callback' do
          end
         else
           if event.message['text'] == '登録した映画'
-            reply=[]
+            replyes=[]
             subscriptions = User.find_by(line_id: userId).movies
             subscriptions.each do |subscription|
-              reply.push(subscription.title)
+              replyes.push(subscription.title)
             end
-            replyis=reply.join("\n")
+            reply=replyes.join("\n")
             message.push({
               type: 'text',
-              text: replyis
+              text: reply
             })
           else
             message.push({
