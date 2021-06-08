@@ -24,7 +24,7 @@ users.each do |user|
             content = +theater+finish
             message = {
                         type: 'text',
-                        text: '「'+subscription.title.strip+'」の公開終了時期が迫っています！！'+'\n'+content
+                        text: '「'+subscription.title.strip+'」の公開終了時期が迫っています！！'+content
                       }
             client.push_message(user_id, message)
          end
