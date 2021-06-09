@@ -39,6 +39,7 @@
 	<% else %> 
 		<% if User.find(session[:user]).line_id.present? %>
 		</nav>
+		<nav class="col-md-2 d-none d-md-block bg-light sidebar">
 		<div class="sidebar-sticky">
         <ul class="nav flex-column">
           <li class="nav-item">
@@ -52,6 +53,7 @@
           </li>
         </ul>
         </div>
+        </nav>
 			<h3>
 				<form action="/index" method="post">
 				<select name="theater" onchange="submit(this.form)">
