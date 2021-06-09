@@ -10,31 +10,6 @@ body{
     padding: 10px;
 }
 
-/* 数字 */
-h1{
-    margin: auto;
-    
-    margin-top: 1rem;
-    
-    /* 文字の太さ */
-    font-weight: 100;
-    
-    /* 文字を中央寄せ */
-    text-align: center;
-    
-    /* 横幅 */
-    width: 100px;
-    
-    /* 縦幅 */
-    height: 100px;
-    line-height: 100px;
-    
-    /* 枠の太さ 線の種類 色 */
-    border: 1px solid #009688;
-    
-    /* 枠を丸くする */
-    border-radius: 50%;
-}
 
 /* ボタン共通 */
 input{
@@ -53,52 +28,14 @@ input{
     font-size: 20px;
 }
 
-/* プラスボタン */
-input[value="+"]{
-    
-    /* 文字の色 */
-    color: #f9f9f9;
-    
-    /* 背景 */
-    background: #448AFF;
-}
-
-/* マイナスボタン */
-input[value="-"]{
-    color: #f9f9f9;
-    background: #F44336;
-}
-
-input[value="×2"]{
-    color: #f9f9f9;
-    background: #F0F033;
-}
-
-input[value="÷2"]{
-    color: #f9f9f9;
-    background: #F344F0;
-}
-
-input[value="clear"]{
-    color: #f9f9f9;
-    background: #33F0FF;
-}
 
 .container{
     display: flex;
 }
 
-.text{
-    margin-right:0.5em;
-}
 
 .button{
     margin-left:0.5em;
     color: #f9f9f9;
     background-color: #448AF0;
-}
-
-input[value="追加"]{
-    color: #f9f9f9;
-    background: #F08AF0;
 }

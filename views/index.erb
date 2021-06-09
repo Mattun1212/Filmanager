@@ -5,7 +5,7 @@
 	 <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
- 
+ 	<link rel="stylesheet" href="filmanager.css">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<title>index</title>
@@ -41,51 +41,51 @@
 		</nav>
 		<div class="container-fluid">
 			<div class="row">
-		<nav class="col-md-2 d-none d-md-block bg-light sidebar">
-		<div class="sidebar-sticky">
-        <ul class="nav flex-column">
-          <li class="nav-item">
-          	<a class="nav-link active" href="/">トップ</a>
-          </li>
-          <li class="nav-item">
-         	<a class="nav-link active" href="/mypage"><%= User.find(session[:user]).name %></a>
-          </li>
-          <li class="nav-item">
-         	<a class="nav-link active" href="/signout">ログアウト</a>
-          </li>
-        </ul>
-        </div>
-        </nav>
-        <div>
-			<h3>
-				<form action="/index" method="post">
-				<select name="theater" onchange="submit(this.form)">
-						<% @theaters.each do |theater| %>
-							<%if theater.name == @theater%>
-								<option value="<%= theater.name %>" selected><%= theater.official %></option>
-							<% else %>
-								<option value="<%= theater.name %>"><%= theater.official %></option>
-							<% end %>
+				<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+				  <div class="sidebar-sticky">
+					<ul class="nav flex-column">
+						<li class="nav-item">
+							<a class="nav-link active" href="/">トップ</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" href="/mypage"><%= User.find(session[:user]).name %></a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link active" href="/signout">ログアウト</a>
+						</li>
+					</ul>
+				  </div>
+				</nav>
+				<div>
+					<h3>
+						<form action="/index" method="post">
+							<select name="theater" onchange="submit(this.form)">
+								<% @theaters.each do |theater| %>
+									<%if theater.name == @theater%>
+										<option value="<%= theater.name %>" selected><%= theater.official %></option>
+									<% else %>
+										<option value="<%= theater.name %>"><%= theater.official %></option>
+									<% end %>
+								<% end %>
+							</select>
+						</form>
+					で上映中の映画</h3>
+			<!--<a href="/mypage">マイページへ</a>-->
+					<%@movies.each do |movie|%>
+		 			<div>
+						<p><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>"><%=movie[0]%>
+						<% if movie[2].present? %>
+							<%=movie[2]%>終了
 						<% end %>
-				</select>
-				</form>
-			で上映中の映画</h3>
-			<a href="/mypage">マイページへ</a>
-			<%@movies.each do |movie|%>
-		 	<div>
-				<p><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>"><%=movie[0]%>
-				<% if movie[2].present? %>
-					<%=movie[2]%>終了
-				<% end %>
-				</a></p>
-				<form action="/add/<%=movie[1]%>" method="post">
-					<input type="hidden" name="theater" value="<%=@theater%>">
-					<input type="submit" value="追加">
-				</form>
+						</a></p>
+						<form action="/add/<%=movie[1]%>" method="post">
+							<input type="hidden" name="theater" value="<%=@theater%>">
+							<input type="submit" value="追加">
+						</form>
+					</div>
+					<% end %>
+				</div>
 			</div>
-			<% end %>
-		</div>
-		</div>
 		</div>
 		<% else %>
 		</nav>
