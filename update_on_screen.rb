@@ -15,6 +15,7 @@ module Everyday
        Movie.find_by(title: movie[0], movie_id: movie[1], theater: theater.name).update(finish: movie[2])
       end
     end
+    
     today = Date.today
     dates=Movie.all
     dates.each do |date|
