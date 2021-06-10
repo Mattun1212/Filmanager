@@ -36,17 +36,17 @@ module Everyday
     end
     
     
-    # @movies.each do |movie|
-    #     movie[3]=theater.name
-    #     m_url='https://www.unitedcinemas.jp/'+theater.name+'/film.php?film='+movie[1]
-    #     begin
-    #     info = Scraping_movie.load_movie_data(m_url)
-    #     Movie.find_by(movie_id: movie[1], theater: theater.name).update(img: info[1])
-    #     Today.create(title: movie[0], movie_id: movie[1], finish: movie[2] ,theater: movie[3], img: info[1])
-    #     rescue => e
-    #       puts e
-    #     end
-    #    end
+    @movies.each do |movie|
+        movie[3]=theater.name
+        Today.create(title: movie[0], movie_id: movie[1], finish: movie[2] ,theater: movie[3], img: info[1])
+        # m_url='https://www.unitedcinemas.jp/'+theater.name+'/film.php?film='+movie[1]
+        # begin
+        # info = Scraping_movie.load_movie_data(m_url)
+        # Movie.find_by(movie_id: movie[1], theater: theater.name).update(img: info[1])
+        # rescue => e
+        #   puts e
+        # end
+       end
     end
    end
 end
