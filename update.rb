@@ -1,4 +1,3 @@
-require 'csv'
 require './update_on_screen.rb'
 require './scraping_on_screen.rb'
 require 'sinatra/activerecord'

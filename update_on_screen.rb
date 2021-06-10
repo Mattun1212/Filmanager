@@ -2,8 +2,6 @@ module Everyday
  def self.update_on_screen_data
     @theaters=Theater.all
     Today.destroy_all
-    headers = %w[title movie_id finish theater]
-    CSV.open('Today_on_screen.csv', 'w') { |csv| csv << headers }
     @theaters.each do |theater|
     url='https://www.unitedcinemas.jp/'+theater.name+'/daily.php'
     @movies = Scraping_on_screen.load_schedule_data(url)
@@ -16,20 +14,20 @@ module Everyday
       end
     end
     
-    today = Date.today
-    dates=Movie.all
-    dates.each do |date|
-     if date.finish.present?
-      finish=date.finish.split('/')
-      if today.month==finish[0]
-        if today.date > finish[1]
-         Subscription.find_by(movie_id: date.id).destroy
-        end
-      elsif today.month>finish[0]
-         Subscription.find_by(movie_id: date.id).destroy
-      end
-     end
-    end
+    # today = Date.today
+    # dates=Movie.all
+    # dates.each do |date|
+    #  if date.finish.present?
+    #   finish=date.finish.split('/')
+    #   if today.month==finish[0]
+    #     if today.date > finish[1]
+    #      Subscription.find_by(movie_id: date.id).destroy
+    #     end
+    #   elsif today.month>finish[0]
+    #      Subscription.find_by(movie_id: date.id).destroy
+    #   end
+    #  end
+    # end
     
     @movies.each do |movie|
         movie[3]=theater.name
