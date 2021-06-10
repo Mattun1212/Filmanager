@@ -70,16 +70,19 @@
 					で上映中の映画</h3>
 			<!--<a href="/mypage">マイページへ</a>-->
 					<%@movies.each do |movie|%>
-		 			<div>
-						<p><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>"><%=movie[0]%>
-						<% if movie[2].present? %>
-							<%=movie[2]%>終了
-						<% end %>
-						</a></p>
-						<form action="/add/<%=movie[1]%>" method="post">
-							<input type="hidden" name="theater" value="<%=@theater%>">
-							<input type="submit" value="追加">
-						</form>
+					<div class = "card col-3 m-3 mx-5 content">
+						<div class="card-body">
+							<div class="d-flex justify-content-end align-items-center mt-3">
+							<p><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>"><%=movie[0]%>
+							<% if movie[2].present? %>
+								<%=movie[2]%>終了
+							<% end %>
+							</a></p>
+							<form action="/add/<%=movie[1]%>" method="post">
+								<input type="hidden" name="theater" value="<%=@theater%>">
+								<input type="submit" value="追加" class="btn card-footer-text">
+							</form>
+						</div>
 					</div>
 					<% end %>
 				</div>
