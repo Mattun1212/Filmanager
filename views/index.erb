@@ -72,11 +72,11 @@
 								<div class = "card col-5 m-2 content">
 									<div class="card-body">
 										<!--<div class="d-flex justify-content-end align-items-center mt-3">-->
-											<p><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>"><%=movie[0]%>
+											<p><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>"><%=movie[0]%></a></p>
 												<% if movie[2].present? %>
-													<%=movie[2]%>終了
+													<p><%=movie[2]%>終了</p>
 												<% end %>
-											</a></p>
+											</p>
 											<form action="/add/<%=movie[1]%>" method="post">
 												<input type="hidden" name="theater" value="<%=@theater%>">
 												<input type="submit" value="追加" class="btn card-footer-text">
