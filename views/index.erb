@@ -74,7 +74,7 @@
 							<%@movies.each do |movie|%>
 								<div class = "card col-3 m-3 mx-5 content">
 									<div class="card-body">
-										<div class="d-flex justify-content-end align-items-center mt-3">
+										<!--<div class="d-flex justify-content-end align-items-center mt-3">-->
 											<p><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>"><%=movie[0]%>
 												<% if movie[2].present? %>
 													<%=movie[2]%>終了
@@ -84,11 +84,11 @@
 												<input type="hidden" name="theater" value="<%=@theater%>">
 												<input type="submit" value="追加" class="btn card-footer-text">
 											</form>
-										</div>
+										<!--</div>-->
 									</div>
 								</div>
+								<% end %>
 						</div>
-						<% end %>
 					</div>
 				</div>
 			</div>
