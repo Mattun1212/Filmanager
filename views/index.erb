@@ -55,8 +55,8 @@
 				  </div>
 				</nav>
 				<div class="col-md-10">
-						<div class="justify-content-center">
-						  <form action="/index" method="post" class="mx-auto">
+						<div class="mx-auto col-6">
+						  <form action="/index" method="post">
 							<select name="theater" onchange="submit(this.form)">
 								<% @theaters.each do |theater| %>
 									<%if theater.name == @theater%>
