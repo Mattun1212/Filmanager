@@ -52,9 +52,9 @@
 		</nav>
 		<div class="container-fluid">
 			<div class="row">
-				<div class="align-items-center mx-3">
-						  <form action="/index" method="post">
-							<select name="theater" onchange="submit(this.form)">
+				<div class="text-align-center mx-3">
+						  <form action="/index" method="post" class="text-align-center">
+							<select name="theater" onchange="submit(this.form)" >
 								<% @theaters.each do |theater| %>
 									<%if theater.name == @theater%>
 										<option value="<%= theater.name %>" selected><%= theater.official %></option>
