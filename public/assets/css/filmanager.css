@@ -33,6 +33,10 @@ input{
     display: flex;
 }
 
+.content{
+    margin:0 auto;
+}
+
 .sidebar-sticky {
   position: sticky;
   top: 60px;
