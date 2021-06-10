@@ -42,6 +42,10 @@ body{
   top: 60px;
 }
 
+.sidebar{
+  height: 100%;
+}
+
 /*.navbar {*/
 /*  position: sticky;*/
 /*  top: 0px;*/
