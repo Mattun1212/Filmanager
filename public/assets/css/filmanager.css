@@ -42,7 +42,8 @@ body{
   top: 60px;
 }
 
-.col-md-2{
+.sidebar{
+  width:20%;
   min-height: calc(100vh - 50px);
 }
 
