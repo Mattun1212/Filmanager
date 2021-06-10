@@ -12,21 +12,21 @@
 
 
 /* ボタン共通 */
-input{
-    border: 1px solid;
-    background: none;
-    display: block;
-    margin: auto;
+/*input{*/
+/*    border: 1px solid;*/
+/*    background: none;*/
+/*    display: block;*/
+/*    margin: auto;*/
     
-    width: 80%;
-    text-align: center;
+/*    width: 80%;*/
+/*    text-align: center;*/
     
     /* 上との余白 */
-    margin-top: 20px;
+/*    margin-top: 20px;*/
     
     /* 文字の大きさ */
-    font-size: 20px;
-}
+/*    font-size: 20px;*/
+/*}*/
 
 
 .container{
