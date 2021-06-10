@@ -55,7 +55,8 @@
 				  </div>
 				</nav>
 				<div class="col-md-10">
-						<p><form action="/index" method="post">
+						<div>
+						  <form action="/index" method="post">
 							<select name="theater" onchange="submit(this.form)">
 								<% @theaters.each do |theater| %>
 									<%if theater.name == @theater%>
@@ -65,8 +66,8 @@
 									<% end %>
 								<% end %>
 							</select>
-						</form>
-					で上映中の映画</p>
+						  </form>で上映中の映画
+						</div>
 			<!--<a href="/mypage">マイページへ</a>-->
 					<div class="container-fluid">
 						<div class="row d-flex justify-content-around">
