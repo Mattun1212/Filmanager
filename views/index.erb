@@ -52,8 +52,8 @@
 		</nav>
 		<div class="container-fluid">
 			<div class="row">
-				<div class="justify-content-center mx-3">
-						  <form action="/index" method="post" class="justify-content-center">
+				<div class="align-items-center mx-3">
+						  <form action="/index" method="post">
 							<select name="theater" onchange="submit(this.form)">
 								<% @theaters.each do |theater| %>
 									<%if theater.name == @theater%>
