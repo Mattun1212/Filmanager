@@ -50,21 +50,25 @@
 					</ul>
 				  </div>
 				</nav>
-				<div class="justify-content-center">
-				  <ul>
-					<% @my_movies.each do |movie| %>
-						<li>
-							<a href="/movie/<%=movie[1]%>"><%= movie[0] %>(<%=Theater.find_by(name: movie[2]).official%>)
-							<% if movie[3].present? %>
-								<%=movie[3]%>終了
-							<% end %></a>
-							<form action="/delete/<%=movie[1]%>" method="post">
-								<input type="hidden" name="theater" value="<%=movie[2]%>">
-								<input type="submit" value="削除">
-							</form>
-						</li>
-					<% end %>
-				  </ul>
+				<div class="col-md-10 justify-content-center">
+				<div class="container-fluid px-3">
+						<div class="row d-flex justify-content-left px-3">
+							<%@movies.each do |movie|%>
+								<div class = "card col-3 m-2 content">
+									<div class="card-body">
+										<p><a href="/movie/<%=movie[1]%>"><%= movie[0] %>(<%=Theater.find_by(name: movie[2]).official%>)
+											<% if movie[3].present? %>
+												<%=movie[3]%>終了
+											<% end %></a></p>
+										<form action="/delete/<%=movie[1]%>" method="post">
+											<input type="hidden" name="theater" value="<%=movie[2]%>">
+											<input type="submit" value="削除">
+										</form>
+									</div>
+								</div>
+							<% end %>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
