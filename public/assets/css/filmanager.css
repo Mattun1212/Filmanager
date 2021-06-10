@@ -38,10 +38,10 @@ input{
   top: 60px;
 }
 
-.navbar {
-  position: sticky;
-  top: 0px;
-}
+/*.navbar {*/
+/*  position: sticky;*/
+/*  top: 0px;*/
+/*}*/
 
 .button{
     margin-left:0.5em;
