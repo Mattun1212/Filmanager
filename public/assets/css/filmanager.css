@@ -1,14 +1,10 @@
 *{
     box-sizing: border-box;
 }
-/*body{*/
-    /* 全体の横幅 */
-/*    width: 320px;*/
-    /* 全体を中央寄せ */
-/*    margin: auto;*/
-    /* 全体の余白 */
-/*    padding: 10px;*/
-/*}*/
+body{
+    height: 100%;
+    padding-top:58px;
+}
 
 
 /* ボタン共通 */
