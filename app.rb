@@ -178,7 +178,7 @@ get '/mypage' do
 end
 
 get '/signin' do
-  if session[:user]
+  unless session[:user]
    erb :sign_in 
    else
     redirect '/'
@@ -186,7 +186,7 @@ get '/signin' do
 end
 
 get '/signup' do
-  if session[:user]
+  unless session[:user]
    @theaters = Theater.all
    erb :sign_up
   else
