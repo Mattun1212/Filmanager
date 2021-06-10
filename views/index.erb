@@ -70,9 +70,9 @@
 					で上映中の映画</h3>
 			<!--<a href="/mypage">マイページへ</a>-->
 					<div class="container-fluid">
-						<div class="row d-flex justify-content-center">
+						<div class="row d-flex justify-content-left">
 							<%@movies.each do |movie|%>
-								<div class = "card col-3 m-2 content">
+								<div class = "card col-2 m-2 content">
 									<div class="card-body">
 										<!--<div class="d-flex justify-content-end align-items-center mt-3">-->
 											<p><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>"><%=movie[0]%>
