@@ -172,16 +172,26 @@ get '/mypage' do
      @my_movies.append(movie_param)
     end
     erb :mypage
+  else
+    redirect '/'
   end
 end
 
 get '/signin' do
+  if session[:user]
    erb :sign_in 
+   else
+    redirect '/'
+  end
 end
 
 get '/signup' do
+  if session[:user]
    @theaters = Theater.all
    erb :sign_up
+  else
+    redirect '/'
+  end
 end
 
 post '/signin' do
