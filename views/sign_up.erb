@@ -38,17 +38,17 @@
         <div class="card col-6 m-5 align-items-center form">
           <div class="card-body mx-5 d-flex">
             <form action="/signup" method="post">
-                <input type="text" name="name" placeholder="ユーザ名">
-                <input type="text" name="mail" placeholder="Eメール">
-                <label for="theater">マイ映画館</label>
+                <p><input type="text" name="name" placeholder="ユーザ名"></p>
+                <p><input type="text" name="mail" placeholder="Eメール"></p>
+                <p><label for="theater">マイ映画館</label>
                 <select name="theater">
                     <% @theaters.each do |theater| %>
                         <option value="<%= theater.name %>"><%= theater.official %></option>
                     <% end %>
-                </select>
-                <input type="password" name="password" placeholder="パスワード"><br>
-                <input type="password" name="password_confirmation" placeholder="パスワードの確認"><br> 
-                <input type="submit" value="新規登録">
+                </select></p>
+                <p><input type="password" name="password" placeholder="パスワード"></p>
+                <p><input type="password" name="password_confirmation" placeholder="パスワードの確認"></p>
+                <p><input type="submit" value="新規登録"></p>
             </form>
           </div>
         </div>
