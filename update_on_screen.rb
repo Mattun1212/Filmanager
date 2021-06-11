@@ -17,13 +17,15 @@ module Everyday
     
     
     today = Date.today
-    dates=Movie.all
+    dates = Movie.all
     dates.each do |date|
      if date.finish.present?
       finish=date.finish.split('/')
+      puts finish
       if today.month==finish[0].to_i
         if today.day > finish[1].to_i
          if Subscription.find_by(movie_id: date.id).present?
+          puts date.id
           Subscription.find_by(movie_id: date.id).destroy
          end
         end
