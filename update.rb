@@ -8,5 +8,5 @@ require './models.rb'
 require 'date'
 require 'net/http'
 
-Everyday.update_on_screen_data
-# Img.update_img
+# Everyday.update_on_screen_data
+Img.update_img
