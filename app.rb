@@ -173,7 +173,7 @@ get '/mypage' do
     @my_movies = []
     subscriptions = User.find(session[:user]).movies
     subscriptions.each do |subscription|
-     movie_param=[subscription.title, subscription.movie_id, subscription.theater, subscription.finish]
+     movie_param=[subscription.title, subscription.movie_id, subscription.theater, subscription.finish, subscription.img]
      @my_movies.append(movie_param)
     end
     erb :mypage
