@@ -42,8 +42,8 @@ module Everyday
         m_url='https://www.unitedcinemas.jp/'+theater.name+'/film.php?film='+movie[1]
         begin
         info = Scraping_movie.load_movie_data(m_url)
-        Movie.find_by(movie_id: movie[1], theater: theater.name).update(img: info[1])
-        Today.find_by(movie_id: movie[1], theater: theater.name).update(img: info[1])
+        Movie.find_by(movie_id: movie[1], theater: theater.name).update(img: info[1].strip)
+        Today.find_by(movie_id: movie[1], theater: theater.name).update(img: info[1].strip)
         rescue => e
           puts e
         end
