@@ -1,4 +1,4 @@
- module Img
+ module Thumb
  def self.update_img
    movies=Movie.all
    movies.each do |movie|
@@ -10,7 +10,8 @@
         rescue => e
           puts e
         end
-     
+    end
+    
     todays = Today.all   
     todays.each do |today|
     m_url='https://www.unitedcinemas.jp/'+today.theater+'/film.php?film='+today.movie_id
@@ -22,4 +23,5 @@
           puts e
         end
     end
+ end
 end
