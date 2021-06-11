@@ -49,7 +49,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="justify-content-center">
-					<h3>登録した映画</h3>
+					<h3 class="justify-content-center">登録した映画</h3>
 				<div class="container-fluid px-3">
 						<div class="row d-flex justify-content-center">
 							<%@my_movies.each do |movie|%>
@@ -57,7 +57,7 @@
 									<div class="card-body">
 										<p><a href="/movie/<%=movie[1]%>"><%= movie[0] %></a></p>
 										<p><img src='<%=movie[4]%>' class='img-fluid rounded' alt='thumb'></p>
-										<p>(<%=Theater.find_by(name: movie[2]).official%></p>
+										<p><%=Theater.find_by(name: movie[2]).official%></p>
 										<p>	<% if movie[3].present? %>
 												<%=movie[3]%>終了
 											<% end %></p>
