@@ -51,14 +51,16 @@
 				<div class="justify-content-center">
 					<h3>登録した映画</h3>
 				<div class="container-fluid px-3">
-						<div class="row d-flex justify-content-left px-3">
+						<div class="row d-flex justify-content-center">
 							<%@my_movies.each do |movie|%>
 								<div class = "card col-3 m-2 content">
 									<div class="card-body">
-										<p><a href="/movie/<%=movie[1]%>"><%= movie[0] %>(<%=Theater.find_by(name: movie[2]).official%>)
-											<% if movie[3].present? %>
+										<p><a href="/movie/<%=movie[1]%>"><%= movie[0] %></a></p>
+										<p><img src='<%=movie[4]%>' class='img-fluid rounded' alt='thumb'></p>
+										<p>(<%=Theater.find_by(name: movie[2]).official%></p>
+										<p>	<% if movie[3].present? %>
 												<%=movie[3]%>終了
-											<% end %></a></p>
+											<% end %></p>
 										<form action="/delete/<%=movie[1]%>" method="post">
 											<input type="hidden" name="theater" value="<%=movie[2]%>">
 											<input type="submit" value="削除">
