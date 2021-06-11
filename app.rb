@@ -9,8 +9,8 @@ Dotenv.load
 enable :sessions
 
 before do
-  Movie.update_all(img: 'noimg.png')
-  Today.update_all(img: 'noimg.png')
+  Movie.update_all(img: 'noimage.png')
+  Today.update_all(img: 'noimage.png')
 end
 
 def client
