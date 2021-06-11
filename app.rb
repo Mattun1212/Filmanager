@@ -8,10 +8,10 @@ require './update_on_screen.rb'
 Dotenv.load
 enable :sessions
 
-before do
-  Movie.update_all(img: 'no_img.png')
-  Today.update_all(img: 'no_img.png')
-end
+# before do
+#   Movie.update_all(img: 'no_img.png')
+#   Today.update_all(img: 'no_img.png')
+# end
 
 def client
   @client ||= Line::Bot::Client.new { |config|
