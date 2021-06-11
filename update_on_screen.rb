@@ -23,7 +23,6 @@ module Everyday
       finish=date.finish.split('/')
       if today.month==finish[0].to_i
         if today.day > finish[1].to_i
-         puts date.id
          if Subscription.find_by(movie_id: date.id).present?
           Subscription.find_by(movie_id: date.id).destroy
          end
@@ -40,14 +39,16 @@ module Everyday
     @movies.each do |movie|
         movie[3]=theater.name
         Today.create(title: movie[0], movie_id: movie[1], finish: movie[2] ,theater: movie[3])
-        # m_url='https://www.unitedcinemas.jp/'+theater.name+'/film.php?film='+movie[1]
-        # begin
-        # info = Scraping_movie.load_movie_data(m_url)
-        # Movie.find_by(movie_id: movie[1], theater: theater.name).update(img: info[1])
-        # rescue => e
-        #   puts e
-        # end
+        m_url='https://www.unitedcinemas.jp/'+theater.name+'/film.php?film='+movie[1]
+        begin
+        info = Scraping_movie.load_movie_data(m_url)
+        Movie.find_by(movie_id: movie[1], theater: theater.name).update(img: info[1])
+        Today.find_by(movie_id: movie[1], theater: theater.name).update(img: info[1])
+        rescue => e
+          puts e
+        end
        end
     end
-   end
+ 
+ end
 end

@@ -7,4 +7,5 @@ require 'nokogiri'
 require './models.rb'
 require 'date'
 require 'net/http'
+# Img.update_on_screen_data
 Everyday.update_on_screen_data
