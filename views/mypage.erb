@@ -57,7 +57,7 @@
 									<div class="card-body">
 										<%if movie[0].length>=25%>
 											<p class="font-small"><a href="/movie/<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>
-										<% else if movie[0].length>=15%>
+										<% elsif movie[0].length>=15%>
 											<p class="font-mid"><a href="/movie/<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>
 										<% else %>	
 											<p><a href="/movie/<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>

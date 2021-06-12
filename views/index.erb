@@ -72,8 +72,10 @@
 								<div class = "card col-sm-5 col-md-4 col-lg-3 col-xl-2 m-2 content">
 									<div class="card-body">
 										<!--<div class="d-flex justify-content-end align-items-center mt-3">-->
-										<%if movie[0].length>=15%>
+										<%if movie[0].length>=25%>
 											<a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><p class="font-small"><%=movie[0]%></p></a>
+										<% elsif movie[0].length>=15%>
+											<p class="font-mid"><a href="/movie/<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>
 										<%else%>
 											<p><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%=movie[0]%></a></p>
 										<% end %>
