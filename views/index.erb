@@ -51,49 +51,45 @@
         </div>
 		</nav>
 		<div class="container-fluid">
-			<div class="row">
-				<div class="text-align-center mx-3">
-						  <form action="/index" method="post">
-							<select name="theater" onchange="submit(this.form)" class="text-align-center">
-								<% @theaters.each do |theater| %>
-									<%if theater.name == @theater%>
-										<option value="<%= theater.name %>" selected><%= theater.official %></option>
-									<% else %>
-										<option value="<%= theater.name %>"><%= theater.official %></option>
-									<% end %>
-								<% end %>
-							</select>
-							<label>で上映中の映画</label>
-						  </form>
+			<div class="row justify-content-center">
+				<form action="/index" method="post">
+					<select name="theater" onchange="submit(this.form)" class="text-align-center">
+						<% @theaters.each do |theater| %>
+							<%if theater.name == @theater%>
+								<option value="<%= theater.name %>" selected><%= theater.official %></option>
+							<% else %>
+								<option value="<%= theater.name %>"><%= theater.official %></option>
+							<% end %>
+						<% end %>
+					</select>
+					<label>で上映中の映画</label>
+				</form>
+			</div>
+		</div>
 			<!--<a href="/mypage">マイページへ</a>-->
-					<div class="container-fluid">
-						<div class="row d-flex justify-content-center">
-							<%@movies.each do |movie|%>
-								<div class = "card col-sm-5 col-md-4 col-lg-3 col-xl-2 m-2 content">
-									<div class="card-body">
-										<!--<div class="d-flex justify-content-end align-items-center mt-3">-->
-										<%if movie[0].length>=25%>
-											<a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><p class="font-small"><%=movie[0]%></p></a>
-										<% elsif movie[0].length>=15%>
-											<p class="font-mid"><a href="/movie/<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>
-										<%else%>
-											<p><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%=movie[0]%></a></p>
-										<% end %>
-											<p><img src='<%=movie[4]%>' class='img-fluid rounded' alt='thumb'></p>
-												<% if movie[2].present? %>
-													<p><%=movie[2]%>終了</p>
-												<% end %>
-											<form action="/add/<%=movie[1]%>" method="post">
-												<input type="hidden" name="theater" value="<%=@theater%>">
-												<input type="submit" value="追加" class="btn card-footer-text">
-											</form>
-										<!--</div>-->
-									</div>
-								</div>
+		<div class="container-fluid">
+			<div class="row d-flex justify-content-center">
+				<%@movies.each do |movie|%>
+					<div class = "card col-sm-5 col-md-4 col-lg-3 col-xl-2 m-2 content">
+						<div class="card-body">
+							<%if movie[0].length>=25%>
+								<a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><p class="font-small"><%=movie[0]%></p></a>
+							<% elsif movie[0].length>=15%>
+								<p class="font-mid"><a href="/movie/<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>
+							<%else%>
+								<p><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%=movie[0]%></a></p>
+							<% end %>
+							<p><img src='<%=movie[4]%>' class='img-fluid rounded' alt='thumb'></p>
+								<% if movie[2].present? %>
+									<p><%=movie[2]%>終了</p>
 								<% end %>
+							<form action="/add/<%=movie[1]%>" method="post">
+								<input type="hidden" name="theater" value="<%=@theater%>">
+								<input type="submit" value="追加" class="btn card-footer-text">
+							</form>
 						</div>
 					</div>
-				</div>
+				<% end %>
 			</div>
 		</div>
 		<% else %>
