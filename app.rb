@@ -148,15 +148,16 @@ post '/add/:id' do
       Subscription.create(user_id: session[:user], movie_id: id, theater: @theater)
     end
   end
-  @movies=[]
-   todays = Today.all
-    todays.each do |today|
-      if today.theater == @theater
-      row = [today.title, today.movie_id, today.finish, @theater, today.img]
-      @movies.push(row)
-      end
-    end
-    erb :index
+  # @movies=[]
+  # todays = Today.all
+  #   todays.each do |today|
+  #     if today.theater == @theater
+  #     row = [today.title, today.movie_id, today.finish, @theater, today.img]
+  #     @movies.push(row)
+  #     end
+  #   end
+  #   erb :index
+  redirect '/'
 end
 
 post '/delete/:id' do
