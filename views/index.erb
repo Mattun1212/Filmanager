@@ -68,7 +68,7 @@
 		</div>
 			<!--<a href="/mypage">マイページへ</a>-->
 		<div class="container-fluid">
-			<div class="row d-flex justify-content-left">
+			<div class="row d-flex justify-content-center">
 				<%@movies.each do |movie|%>
 					<div class = "card col-sm-5 col-md-4 col-lg-3 col-xl-2 m-2 content">
 						<div class="card-body">
@@ -120,5 +120,17 @@
         </div>
 		<% end %>	
 	<% end %>
+<script>
+var $center = $('.justify-content-center'),   
+    emptyCells = [],
+    i;
+
+// 子パネル (li.cell) の数だけ空の子パネル (li.cell.is-empty) を追加する。
+for (i = 0; i < $center.find('.card').length; i++) {
+    emptyCells.push($('<div>', { class: 'card is-empty' }));
+}
+
+$center.append(emptyCells);
+</script>
 </body>
 </html>
