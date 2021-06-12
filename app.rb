@@ -152,7 +152,7 @@ post '/add/:id' do
    todays = Today.all
     todays.each do |today|
       if today.theater == @theater
-      row = [today.title, today.movie_id, today.finish, @theater]
+      row = [today.title, today.movie_id, today.finish, @theater, today.img]
       @movies.push(row)
       end
     end
@@ -185,7 +185,7 @@ end
 get '/signin' do
   unless session[:user]
    erb :sign_in 
-   else
+  else
     redirect '/'
   end
 end
