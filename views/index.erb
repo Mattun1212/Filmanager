@@ -72,12 +72,15 @@
 								<div class = "card col-sm-4 col-md-3 col-lg-2 m-2 content">
 									<div class="card-body">
 										<!--<div class="d-flex justify-content-end align-items-center mt-3">-->
+										<%if movie[0].length>=10%>
+											<p class="font-small"><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%=movie[0]%></a></p>
+										<%else%>
 											<p><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%=movie[0]%></a></p>
+										<% end %>
 											<p><img src='<%=movie[4]%>' class='img-fluid rounded' alt='thumb'></p>
 												<% if movie[2].present? %>
 													<p><%=movie[2]%>終了</p>
 												<% end %>
-											</p>
 											<form action="/add/<%=movie[1]%>" method="post">
 												<input type="hidden" name="theater" value="<%=@theater%>">
 												<input type="submit" value="追加" class="btn card-footer-text">
