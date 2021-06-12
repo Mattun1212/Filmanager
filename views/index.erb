@@ -73,7 +73,7 @@
 									<div class="card-body">
 										<!--<div class="d-flex justify-content-end align-items-center mt-3">-->
 										<%if movie[0].length>=10%>
-											<p class="font-small"><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%=movie[0]%></a></p>
+											<a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><p class="font-small"><%=movie[0]%></p></a>
 										<%else%>
 											<p><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%=movie[0]%></a></p>
 										<% end %>
