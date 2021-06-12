@@ -53,7 +53,7 @@
 				<div class="container-fluid px-3">
 						<div class="row d-flex justify-content-center">
 							<%@my_movies.each do |movie|%>
-								<div class = "card col-3 m-2 content">
+								<div class = "card col-sm-5 col-md-4 col-lg-3 m-2 content">
 									<div class="card-body">
 										<p><a href="/movie/<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>
 										<p><img src='<%=movie[4]%>' class='img-fluid rounded' alt='thumb'></p>
