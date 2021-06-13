@@ -53,23 +53,21 @@
 					<div class = "card align-items-center col-sm-5 col-md-4 col-lg-3  col-xl-2 m-2 content">
 						<div class="card-body">
 							<%if movie[0].length>=25%>
-								<p class="font-small"><a href="/movie/<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>
+								<p class="font-small text-center"><a href="/movie/<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>
 							<% elsif movie[0].length>=15%>
-								<p class="font-mid"><a href="/movie/<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>
+								<p class="font-mid text-center"><a href="/movie/<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>
 							<% else %>	
 								<p><a href="/movie/<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>
 							<% end %>	
-							<p><img src='<%=movie[4]%>' class='img-fluid rounded' alt='thumb'></p>
+							<p class="text-center"><img src='<%=movie[4]%>' class='img-fluid rounded' alt='thumb'></p>
 							<p><%=Theater.find_by(name: movie[2]).official%></p>
 							<% if movie[3].present? %>
 								<p class="finish"><%=movie[3]%>終了</p>
-							<% else %>
-								<p><br></p>
 							<% end %>
 							<div class="d-flex justify-content-end">
 							<form action="/delete/<%=movie[1]%>" method="post">
 								<input type="hidden" name="theater" value="<%=movie[2]%>">
-								<input type="submit" value="削除" class="btn card-footer-text">
+								<input type="submit" value="&#xf2ed;" class="btn card-footer-text far fa-trash-alt">
 							</form>
 							</div>
 						</div>
