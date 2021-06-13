@@ -86,3 +86,7 @@ body{
   margin-top: 0;
   margin-bottom: 0;
 }
+
+.fa-plus:hover {
+    color: #F0F4BC;
+}
