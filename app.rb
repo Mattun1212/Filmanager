@@ -119,6 +119,10 @@ get '/' do
   end
 end
 
+get '/index' do
+  redirect '/'
+end
+
 post '/index' do
   @theaters = Theater.all
   @theater = params[:theater]
@@ -204,21 +208,37 @@ post '/signin' do
    user = User.find_by(mail: params[:mail])
    if user && user.authenticate(params[:password])
         session[:user] = user.id
-   else
-      redirect '/signin'
+        redirect '/'
    end
-   redirect '/'
+   @miss="メールアドレスかパスワードに誤りがあります"
+   erb :sign_in
 end
 
 post '/signup' do
+  @theaters = Theater.all
   unless User.find_by(mail: params[:mail])
     @user = User.create(name: params[:name], mail: params[:mail], my_theater: params[:theater], password: params[:password], password_confirmation: params[:password_confirmation])
     if @user.persisted?
         session[:user] = @user.id
+        redirect '/'
     end
-    redirect '/'
+    
+      if params[:password] == params[:password_confirmation]
+        @miss="不適切なパスワードです"
+      else 
+        @miss="パスワードが一致していません"
+      end
+      
+      pattern = /\A.+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+\z/
+      matched = params[:mail].match(pattern)
+      unless matched
+        @miss="メールアドレスが正しくありません"
+      end
+      
+      erb :sign_up
   else
-    redirect '/signup'
+    @miss="すでに登録されたメールアドレスです"
+    erb :sign_up
   end
 end
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="/assets/css/filmanager.css">
+    <link rel="stylesheet" href="./assets/css/filmanager.css">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <title>ログイン</title>
@@ -17,10 +17,10 @@
         <div class="collapse navbar-collapse justify-content-end">
             <ul class="navbar-nav">
                 <li class="nav-item active float-end">
-                    <a class="nav-link" href="/signup">新規登録</a>
+                    <a class="nav-link" href="/signup">Sign up</a>
                 </li>
                 <li class="nav-item active float-end">
-                    <a class="nav-link active" href="/signin">ログイン</a>
+                    <span class="nav-link  disabled">Sign in</span>
                 </li>
             </ul>
         </div>
@@ -49,21 +49,27 @@
 <!--  </p>-->
   
 <!--</form>-->
-
+<h1 class="title my-3 text-center">Sign in</h1>
+<% if @miss.present? %>
+<p class="my-1 text-center"><%=@miss%></p>
+<% end%>
 <div class="container-fluid">
-      <div class="row d-flex justify-content-center">
-        <div class="card col-sm-10 col-md-8 col-lg-6 my-5 align-items-center form">
-          <div class="card-body d-flex align-items-center justify-content-center">
+      <div class="row justify-content-center">
+        <div class="card my-2 align-items-center signup">
+          <div class="card-body">
             <form action="/signin" method="post">
-              <h1 class="title">Login</h1>
               <p>
-                <input type="mail" placeholder="メールアドレス" name="mail" class="form-control" />
+              <img src='filmanager.png' width="75" height="75" alt='lineQR' class="d-block mx-auto">
               </p>
-              <p>
-                <input type="password" placeholder="パスワード" name="password" class="form-control" />
+              <p class="login">
+                <input type="mail" placeholder="Email" name="mail" class="form-control login" required/>
               </p>
-                 <label class="btn f-btn"><i class="far fa-paper-plane"></i><input type="submit" class="form-control"/></label>
-              </div>
+              <p class="login">
+                <input type="password" placeholder="Password" name="password" class="form-control login" required/>
+              </p>
+              <p class="login">
+                <input type="submit" value="Sign in" class="form-control login"/>
+              </p>
             </form>
           </div>
         </div>
