@@ -88,6 +88,6 @@ body{
 }
 
 .fas:hover {
+    background-color: #F0F4BC;
     color: #F0F4BC;
-    border: 2px;
 }
