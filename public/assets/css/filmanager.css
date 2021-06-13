@@ -76,7 +76,8 @@ body{
 
 .bottom {
     position: absolute;
-    bottom: 0;
+    right: 10px;
+    bottom: 10px;
 }
 .card.is-empty {
   height: 0;
