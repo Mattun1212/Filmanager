@@ -82,8 +82,10 @@
 							<p><img src='<%=movie[4]%>' class='card-img-top rounded' alt='thumb'></p>
 							<% if movie[2].present? %>
 								<p><%=movie[2]%>終了</p>
+							<% else %>
+								<p><br></p>
 							<% end %>
-							<div class="d-flex justify-content-end bottom">
+							<div class="d-flex justify-content-end">
 							<form action="/add/<%=movie[1]%>" method="post">
 								<input type="hidden" name="theater" value="<%=@theater%>">
 								<input type="submit" value="追加" class="btn card-footer-text">
