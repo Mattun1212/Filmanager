@@ -77,11 +77,11 @@
 							<% elsif movie[0].length>=12%>
 								<p class="font-mid text-center"><a href="/movie/<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>
 							<%else%>
-								<p  class="text-center"><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%=movie[0]%></a></p>
+								<p class="text-center"><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%=movie[0]%></a></p>
 							<% end %>
 							<p><img src='<%=movie[4]%>' class='card-img-top rounded' alt='thumb'></p>
 							<% if movie[2].present? %>
-								<p><%=movie[2]%>終了</p>
+								<p class="finish"><%=movie[2]%>終了</p>
 							<% else %>
 								<p><br></p>
 							<% end %>
