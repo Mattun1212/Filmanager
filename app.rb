@@ -119,9 +119,6 @@ get '/' do
   end
 end
 
-get '/index' do
-  redirect '/'
-end
 
 post '/index' do
   @theaters = Theater.all
