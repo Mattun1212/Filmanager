@@ -29,7 +29,7 @@
 <% else %>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
     	<a class="navbar-brand" href="/">Filmanager</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav4" aria-controls="navbarNav4" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
@@ -50,7 +50,7 @@
 		<div class="container-fluid">
 			<div class="row d-flex justify-content-center" id="navbarSupportedContent">
 				<%@my_movies.each do |movie|%>
-					<div class = "card col-sm-5 col-md-4 col-lg-3  col-xl-2 m-2 content">
+					<div class = "card align-items-center col-sm-5 col-md-4 col-lg-3  col-xl-2 m-2 content">
 						<div class="card-body">
 							<%if movie[0].length>=25%>
 								<p class="font-small"><a href="/movie/<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>
@@ -61,14 +61,15 @@
 							<% end %>	
 							<p><img src='<%=movie[4]%>' class='img-fluid rounded' alt='thumb'></p>
 							<p><%=Theater.find_by(name: movie[2]).official%></p>
-							<p>	<% if movie[3].present? %>
-								<%=movie[3]%>終了
-								<% end %>
-							</p>
+							<% if movie[3].present? %>
+								<p><%=movie[3]%>終了</p>
+							<% end %>
+							<div class="d-flex justify-content-end">
 							<form action="/delete/<%=movie[1]%>" method="post">
 								<input type="hidden" name="theater" value="<%=movie[2]%>">
 								<input type="submit" value="削除">
 							</form>
+							</div>
 						</div>
 					</div>
 				<% end %>

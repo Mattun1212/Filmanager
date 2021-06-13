@@ -80,13 +80,15 @@
 								<p  class="text-center"><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%=movie[0]%></a></p>
 							<% end %>
 							<p><img src='<%=movie[4]%>' class='card-img-top rounded' alt='thumb'></p>
-								<% if movie[2].present? %>
-									<p><%=movie[2]%>終了</p>
-								<% end %>
+							<% if movie[2].present? %>
+								<p><%=movie[2]%>終了</p>
+							<% end %>
+							<div class="d-flex justify-content-end">
 							<form action="/add/<%=movie[1]%>" method="post">
 								<input type="hidden" name="theater" value="<%=@theater%>">
 								<input type="submit" value="追加" class="btn card-footer-text">
 							</form>
+							</div>
 						</div>
 					</div>
 				<% end %>
