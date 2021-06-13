@@ -53,7 +53,7 @@
 		<div class="container-fluid">
 			<div class="row justify-content-center">
 				<form action="/index" method="post">
-					<select name="theater" onchange="submit(this.form)" class="text-align-center my-2">
+					<select name="theater" onchange="submit(this.form)" class="text-center my-2">
 						<% @theaters.each do |theater| %>
 							<%if theater.name == @theater%>
 								<option value="<%= theater.name %>" selected><%= theater.official %></option>
