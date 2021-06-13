@@ -87,7 +87,7 @@ body{
   margin-bottom: 0;
 }
 
-.fas:hover {
-    background-color: #F0F4BC;
+.fas:hover, .far:hover {
+    text-shadow:1px;
     color: #F0F4BC;
 }
