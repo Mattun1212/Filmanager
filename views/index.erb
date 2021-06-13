@@ -74,7 +74,7 @@
 						<div class="card-body">
 							<%if movie[0].length>=25%>
 								<a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><p class="font-small text-center"><%=movie[0]%></p></a>
-							<% elsif movie[0].length>=15%>
+							<% elsif movie[0].length>=13%>
 								<p class="font-mid text-center"><a href="/movie/<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>
 							<%else%>
 								<p  class="text-center"><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%=movie[0]%></a></p>
