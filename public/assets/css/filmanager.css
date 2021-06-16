@@ -1,6 +1,12 @@
 *{
     box-sizing: border-box;
 }
+
+@font-face {
+    font-family: 'cinecaption';
+      src: url('cinecaption227.ttf');
+}
+
 html {
   height: 100%;
 }
@@ -128,10 +134,15 @@ body{
 .card-body a{
     text-shadow:0.5px 0.5px 3px #888,0.5px 0.5px 3px #888,0.5px -0.5px 3px #888,-0.5px -0.5px 3px #888;
     color: #F0F4BC;
+    font-family: cinecaption;
 }
 
 .card-body a:hover{
     text-shadow:0.5px 0.5px 1px #999,0.5px 0.5px 1px #999,0.5px -0.5px 1px #999,-0.5px -0.5px 1px #999;
     color: #3A3532;
     text-decoration: none;
+}
+
+h3 {
+    font-family: cinecaption;
 }
