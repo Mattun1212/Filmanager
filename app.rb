@@ -138,11 +138,11 @@ post '/index' do
   erb :index
 end
 
-# get '/movie/:id' do
-#   url='https://www.unitedcinemas.jp/all/film.php?film='+params[:id]
-#   @movies = Scraping_movie.load_movie_data(url)
-#   erb :movie
-# end
+get '/movie/:id' do
+   url='https://www.unitedcinemas.jp/all/film.php?film='+params[:id]
+   @movies = Scraping_movie.load_movie_data(url)
+   erb :movie
+end
 
 post '/add/:id' do
   if session[:user]
@@ -174,18 +174,7 @@ post '/delete/:id' do
   if params[:page] == "mypage"
     redirect '/mypage'
   else
-    @theaters = Theater.all
-    @theater = params[:page]
-    @movies=[]
-    todays = Today.all
-    todays.each do |today|
-      if today.theater == @theater
-       row = [today.title, today.movie_id, today.finish, @theater, today.img]
-       @movies.push(row)
-      end
-    end
-    erb :index
-    redirect "/"
+    redirect '/'
   end
 end
 
