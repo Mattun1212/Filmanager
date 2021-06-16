@@ -86,8 +86,8 @@ body{
 }
 
 .submit{
-    background-color:#F0F4BC;
-    color:#F3F3F3;
+    background-color:#F0F4BC !important;
+    color:#F3F3F3 !important;
 }
 
 /*.bottom {*/
