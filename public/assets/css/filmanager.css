@@ -85,6 +85,11 @@ body{
   width: 300px;
 }
 
+.submit{
+    background-color:#F0F4BC;
+    color:#F3F3F3;
+}
+
 /*.bottom {*/
 /*    position: absolute;*/
 /*    right: 10px;*/
