@@ -8,7 +8,7 @@ html {
 body{
     height: 100%;
     padding-top:58px;
-    background:#F8F3EF;
+    background:#F8F3EF !important;
 }
 
 
