@@ -77,7 +77,7 @@ post '/callback' do
             })
           elsif event.message['text'] == 'もうすぐ終了する映画'
             replyes=[]
-            subscriptions=User.find_by(line_id: user_Id).movies
+            subscriptions=User.find_by(line_id: userId).movies
             subscriptions.each do |subscription|
               if subscription.finish.present?
                 finish=subscription.finish+'終了'
