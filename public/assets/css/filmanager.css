@@ -134,7 +134,7 @@ body{
 .card-body a{
     text-shadow:0.5px 0.5px 3px #888,0.5px 0.5px 3px #888,0.5px -0.5px 3px #888,-0.5px -0.5px 3px #888;
     color: #F0F4BC;
-    font-family: cinecaption;
+    font-family: 'cinecaption';
 }
 
 .card-body a:hover{
