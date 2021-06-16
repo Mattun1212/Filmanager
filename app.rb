@@ -109,15 +109,17 @@ get '/' do
     #   end
     # end
     @movies=[]
-    todays = Today.find_by(theater: @theater)
+    todays = Today.all
     todays.each do |today|
-      row = [today.title, today.movie_id, today.finish, today.theater, today.img]
-      subscriptions.each do |subscription|
-        if  subscription.title == today.title && subscription.theater == today.theater
-          row[5] = 'checked'
+      if today.theater == @theater
+        row = [today.title, today.movie_id, today.finish, today.theater, today.img]
+        subscriptions.each do |subscription|
+          if  subscription.title == today.title && subscription.theater == today.theater
+            row[5] = 'checked'
+          end
         end
+        @movies.push(row)
       end
-      @movies.push(row)
     end
     erb :index
   end
