@@ -17,6 +17,7 @@ body{
 
 .nav-textcolor{
     color:#3A3532 !important;
+    font-family: 'Anton', sans-serif;
 }
 
 .nav-link{
@@ -115,4 +116,5 @@ body{
 .card-body a:hover{
     text-shadow:0.5px 0.5px 1px #999,0.5px 0.5px 1px #999,0.5px -0.5px 1px #999,-0.5px -0.5px 1px #999;
     color: #3A3532;
+    text-decoration: none;
 }
