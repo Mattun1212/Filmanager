@@ -18,6 +18,10 @@ body{
 .nav-textcolor{
     color:#3A3532 !important;
 }
+
+.nav-link{
+    color:#3A3532 !important;
+}
 /* ボタン共通 */
 /*input{*/
 /*    border: 1px solid;*/
