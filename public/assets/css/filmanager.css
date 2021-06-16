@@ -11,6 +11,9 @@ body{
     background:#F8F3EF !important;
 }
 
+.bg{
+    background-color: #F0F4BC;
+}
 
 /* ボタン共通 */
 /*input{*/
