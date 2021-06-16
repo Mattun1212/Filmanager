@@ -40,7 +40,7 @@ module Everyday
         movie[3]=theater.name
         Today.create(title: movie[0], movie_id: movie[1], finish: movie[2] ,theater: movie[3])
        end
-       puts theater.name
+       # puts theater.name
     end
  end
 end
