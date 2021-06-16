@@ -122,7 +122,7 @@ body{
 }
 
 .card-body a{
-    text-shadow:0.5px 0.5px 3px #555,0.5px 0.5px 3px #555,0.5px -0.5px 3px #555,-0.5px -0.5px 3px #555;
+    text-shadow:0.5px 0.5px 3px #777,0.5px 0.5px 3px #777,0.5px -0.5px 3px #777,-0.5px -0.5px 3px #777;
     color: #F0F4BC;
 }
 
