@@ -75,18 +75,20 @@ post '/callback' do
               type: 'text',
               text: reply
             })
-          elsif event.message['text'] == 'もうすぐ終了する映画'
-            replyes=[]
-            subscriptions=User.find_by(line_id: user_id).movies
-            subscriptions.each do |subscription|
-            if subscription.finish.present?
-              finish=subscription.finish+'終了'
-              theater='('+ Theater.find_by(name: subscription.theater).official+')'
-              content = +theater+finish
-              message = {
-                        type: 'text',
-                        text: '「'+subscription.title.strip+'」'+content
-                      }
+          # elsif event.message['text'] == 'もうすぐ終了する映画'
+          #   replyes=[]
+          #   subscriptions=User.find_by(line_id: user_id).movies
+          #   subscriptions.each do |subscription|
+          #   if subscription.finish.present?
+          #     finish=subscription.finish+'終了'
+          #     theater='('+ Theater.find_by(name: subscription.theater).official+')'
+          #     content = +theater+finish
+          #     message{
+          #               type: 'text',
+          #               text: '「'+subscription.title.strip+'」'+content
+          #             }
+          #       end
+          #   end
           else
             message.push({
               type: 'text',
