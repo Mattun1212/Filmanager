@@ -97,6 +97,7 @@ get '/' do
   else
     @theaters = Theater.all
     @theater = User.find(session[:user]).my_theater
+    subscriptions = User.find(session[:user]).movies
     # url='https://www.unitedcinemas.jp/'+@theater+'/daily.php'
     # @movies = Scraping_on_screen.load_schedule_data(url)
     # @movies.each do |movie|
@@ -108,12 +109,15 @@ get '/' do
     #   end
     # end
     @movies=[]
-    todays = Today.all
+    todays = Today.find_by(theater: @theater)
     todays.each do |today|
-      if today.theater == @theater
-      row = [today.title, today.movie_id, today.finish, @theater, today.img]
-      @movies.push(row)
+      row = [today.title, today.movie_id, today.finish, today.theater, today.img]
+      subscriptions.each do |subscription|
+        if  subscription.title == today.title && subscription.theater == today.theater
+          row[5] = 'checked'
+        end
       end
+      @movies.push(row)
     end
     erb :index
   end
@@ -134,11 +138,11 @@ post '/index' do
   erb :index
 end
 
-get '/movie/:id' do
-   url='https://www.unitedcinemas.jp/all/film.php?film='+params[:id]
-   @movies = Scraping_movie.load_movie_data(url)
-   erb :movie
-end
+# get '/movie/:id' do
+#   url='https://www.unitedcinemas.jp/all/film.php?film='+params[:id]
+#   @movies = Scraping_movie.load_movie_data(url)
+#   erb :movie
+# end
 
 post '/add/:id' do
   if session[:user]
@@ -167,7 +171,22 @@ post '/delete/:id' do
     id = Movie.find_by(movie_id: params[:id], theater: theater).id
     Subscription.find_by(user_id: session[:user], movie_id: id).destroy
   end
-  redirect '/mypage'
+  if params[:page] == "mypage"
+    redirect '/mypage'
+  else
+    @theaters = Theater.all
+    @theater = params[:page]
+    @movies=[]
+    todays = Today.all
+    todays.each do |today|
+      if today.theater == @theater
+       row = [today.title, today.movie_id, today.finish, @theater, today.img]
+       @movies.push(row)
+      end
+    end
+    erb :index
+    redirect "/"
+  end
 end
 
 get '/mypage' do

@@ -65,11 +65,12 @@
 							<p class="text-center"><img src='<%=movie[4]%>' class='img-fluid rounded' alt='thumb'></p>
 							<p><%=Theater.find_by(name: movie[2]).official%></p>
 							<% if movie[3].present? %>
-								<p class="finish alert px-0"><%=movie[3]%>終了</p>
+								<p class="alert px-0"><%=movie[3]%>終了</p>
 							<% end %>
 							<div class="d-flex justify-content-end">
 							<form action="/delete/<%=movie[1]%>" method="post">
 								<input type="hidden" name="theater" value="<%=movie[2]%>">
+								<input type="hidden" name="page" value="mypage">
 								<input type="submit" value="&#xf2ed;" class="btn card-footer-text far fa-trash-alt">
 							</form>
 							</div>
