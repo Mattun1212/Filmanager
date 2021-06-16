@@ -54,8 +54,8 @@
                     <input type="text" name="mail" placeholder="mail_address" class="form-control login" required>
                 </p>
                 <p>
-                    <label for="theater">My Theater:</label>
                     <select name="theater" class="form-control login">
+                        <option disabled selected value>Choose My Theater</option>
                     <% @theaters.each do |theater| %>
                         <option value="<%= theater.name %>"><%= theater.official %></option>
                     <% end %>
