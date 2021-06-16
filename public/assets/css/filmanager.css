@@ -23,6 +23,7 @@ body{
 
 .alert{
     color: #F74E4B;
+    font-family: 'cinecaption';
 }
 
 .nav-textcolor{
@@ -131,10 +132,13 @@ body{
     color: #F0F4BC;
 }
 
-.card-body a{
+.card-body p{
+    font-family: 'cinecaption';
+}
+
+.card-body {
     text-shadow:0.5px 0.5px 3px #888,0.5px 0.5px 3px #888,0.5px -0.5px 3px #888,-0.5px -0.5px 3px #888;
     color: #F0F4BC;
-    font-family: 'cinecaption';
 }
 
 .card-body a:hover{
