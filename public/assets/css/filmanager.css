@@ -5,6 +5,7 @@
 @font-face {
     font-family: 'cinecaption';
       src: url('/cinecaption2.27/cinecaption227.TTF') format('truetype');
+    font-display: swap;
 }
 
 html {

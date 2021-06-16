@@ -14,7 +14,7 @@ module Scraping_on_screen
 
    doc.css('li.clearfix').each do |node|
       m_data = []
-      m_data.push(node.css('span.movieTitle a').text.chomp)
+      m_data.push(node.css('span.movieTitle a').text.strip)
       url_before = node.css('span.movieTitle a')[0][:href]
       id = url_before.split("=")[1].split("?")[0]
       m_data.push(id)

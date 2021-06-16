@@ -82,7 +82,7 @@ post '/callback' do
               if subscription.finish.present?
                 finish=subscription.finish+'終了'
                 theater='('+ Theater.find_by(name: subscription.theater).official+')'
-                content = subscription.title+theater+finish
+                content = subscription.title.strip+theater+finish
                 replyes.push(content)
               end
             end
