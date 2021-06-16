@@ -15,6 +15,10 @@ body{
     background-color: #F0F4BC;
 }
 
+.alert{
+    color: #F74E4B;
+}
+
 .nav-textcolor{
     color:#3A3532 !important;
     font-family: 'Anton', sans-serif;
