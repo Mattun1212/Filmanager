@@ -11,7 +11,7 @@ module Scraping_movie
    
    doc = Nokogiri::HTML.parse(html, nil, charset)
       m_data = []
-      m_data.push(doc.css('.movieDetailInfoFilm p').text.chomp)
+      m_data.push(doc.css('.movieDetailInfoFilm p').text.strip)
       m_data.push(doc.css('#movieImage img')[0][:src])
     #   m_data.push(doc.css('.movieDetailInfoFilm iframe')[0][:src])
   return m_data
