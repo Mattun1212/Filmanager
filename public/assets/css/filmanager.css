@@ -111,3 +111,8 @@ body{
     text-shadow:0.5px 0.5px 1px #999,0.5px 0.5px 1px #999,0.5px -0.5px 1px #999,-0.5px -0.5px 1px #999;
     color: #F0F4BC;
 }
+
+.card-body a:hover{
+    text-shadow:0.5px 0.5px 1px #999,0.5px 0.5px 1px #999,0.5px -0.5px 1px #999,-0.5px -0.5px 1px #999;
+    color: #3A3532;
+}
