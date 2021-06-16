@@ -17,10 +17,14 @@
     m_url='https://www.unitedcinemas.jp/'+today.theater+'/film.php?film='+today.movie_id.to_s
         begin
         info = Scraping_movie.load_movie_data(m_url)
-        Movie.find_by(movie_id: today.movie_id, theater: today.theater).update(img: info[1].strip)
+        movie=Movie.find_by(movie_id: today.movie_id, theater: today.theater)
+        if movie.img == "no_img.png"
+           movie.update(img: info[1].strip)
+        end
         Today.find_by(movie_id: today.movie_id, theater: today.theater).update(img: info[1].strip)
         rescue => e
           puts e
+          Today.find_by(movie_id: today.movie_id, theater: today.theater).update(img: movie.img)
         end
     end
  end
