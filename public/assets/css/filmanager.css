@@ -99,11 +99,11 @@ body{
 }
 
 .fas:hover, .far:hover {
-    text-shadow:0.5px 0.5px 0 #000,0.5px 0.5px 0 #000,0.5px -0.5px 0 #000,-0.5px -0.5px 0 #000;
+    text-shadow:0.5px 0.5px 0 #777,0.5px 0.5px 0 #777,0.5px -0.5px 0 #777,-0.5px -0.5px 0 #777;
     color: #F0F4BC;
 }
 
 .card-body a{
-    text-shadow:0.5px 0.5px 0 #000,0.5px 0.5px 0 #000,0.5px -0.5px 0 #000,-0.5px -0.5px 0 #000;
+    text-shadow:0.5px 0.5px 0 #777,0.5px 0.5px 0 #777,0.5px -0.5px 0 #777,-0.5px -0.5px 0 #777;
     color: #F0F4BC;
 }
