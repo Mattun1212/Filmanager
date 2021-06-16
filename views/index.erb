@@ -55,6 +55,7 @@
 		</nav>
 		<div class="container-fluid">
 			<div class="row justify-content-center">
+				<h3 class="text-center my-2">上映中の映画</h3>
 				<form action="/index" method="post">
 					<select name="theater" onchange="submit(this.form)" class="text-center my-2">
 						<% @theaters.each do |theater| %>
@@ -65,7 +66,6 @@
 							<% end %>
 						<% end %>
 					</select>
-					<label>で上映中の映画</label>
 				</form>
 			</div>
 		</div>
