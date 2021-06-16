@@ -96,8 +96,8 @@
 							</form>
 							<% else %>
 							<form action="/delete/<%=movie[1]%>" method="post">
-								<input type="hidden" name="theater" value="<%=movie[2]%>">
-								<input type="hidden" name="<%=@theater%>" value="index">
+								<input type="hidden" name="theater" value="<%=@theater%>">
+								<input type="hidden" name="page" value="<%=@theater%>">
 								<input type="submit" value="&#xf2ed;" class="btn card-footer-text far fa-trash-alt">
 							</form>
 							<% end %>
