@@ -22,7 +22,9 @@ body{
 
 .nav-link{
     color:#3A3532 !important;
+    font-family: 'Anton', sans-serif;
 }
+
 /* ボタン共通 */
 /*input{*/
 /*    border: 1px solid;*/
@@ -78,6 +80,11 @@ body{
     font-size: 12px;
 }
 
+.title{
+    color:#3A3532 !important;
+    font-family: 'Anton', sans-serif;
+}
+
 .signup {
   width: 318px;
 }
@@ -87,7 +94,9 @@ body{
 }
 
 .submit{
+    font-family: 'Anton', sans-serif;
     background-color:#F0F4BC !important;
+    color:#3A3532 !important;
 }
 
 /*.bottom {*/
