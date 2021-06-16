@@ -68,7 +68,7 @@ post '/callback' do
             replyes=[]
             subscriptions = User.find_by(line_id: userId).movies
             subscriptions.each do |subscription|
-              replyes.push(subscription.title)
+              replyes.push(subscription.title.strip)
             end
             reply=replyes.join("\n")
             message.push({
@@ -77,13 +77,13 @@ post '/callback' do
             })
           elsif event.message['text'] == 'もうすぐ終了する映画'
             replyes=[]
-            subscriptions=User.find_by(line_id: user_id).movies
+            subscriptions=User.find_by(line_id: user_Id).movies
             subscriptions.each do |subscription|
               if subscription.finish.present?
                 finish=subscription.finish+'終了'
                 theater='('+ Theater.find_by(name: subscription.theater).official+')'
                 content = subscription.title+theater+finish
-                reply=replyes.push(content)
+                replyes.push(content)
               end
             end
             reply=replyes.join("\n")
