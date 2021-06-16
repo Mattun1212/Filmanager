@@ -4,7 +4,7 @@
 
 @font-face {
     font-family: 'cinecaption';
-      src: url('./cinecaption2.27/cinecaption227.TTF') format('truetype');
+      src: url('/cinecaption2.27/cinecaption227.TTF') format('truetype');
 }
 
 html {
