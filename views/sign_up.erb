@@ -47,13 +47,13 @@
                 <p>
                   <img src='filmanager.png' width="75" height="75" alt='lineQR' class="d-block mx-auto">
                 </p>
-                <p>
+                <p class="login">
                     <input type="text" name="name" placeholder="name" class="form-control login" required>
                 </p>
-                <p>
+                <p class="login"> 
                     <input type="text" name="mail" placeholder="mail_address" class="form-control login" required>
                 </p>
-                <p>
+                <p class="login">
                     <select name="theater" class="form-control login" required>
                         <option disabled selected value>Choose My Theater</option>
                     <% @theaters.each do |theater| %>
@@ -61,10 +61,10 @@
                     <% end %>
                     </select>
                 </p>
-                <p>
+                <p class="login">
                     <input type="password" name="password" placeholder="Password" class="form-control login" required>
                 </p>
-                <p>
+                <p class="login">
                     <input type="password" name="password_confirmation" placeholder="Password for check" class="form-control login" required>
                 </p>
                 <p>
