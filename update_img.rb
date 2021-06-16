@@ -24,7 +24,6 @@ module Thumb
         Today.find_by(movie_id: today.movie_id, theater: today.theater).update(img: info[1].strip)
         rescue => e
           puts e
-          Today.find_by(movie_id: today.movie_id, theater: today.theater).update(img: movie.img)
         end
     end
  end
