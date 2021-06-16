@@ -83,7 +83,7 @@ post '/callback' do
                 finish=subscription.finish+'終了'
                 theater='('+ Theater.find_by(name: subscription.theater).official+')'
                 content = subscription.title+theater+finish
-                replyes.push(content)
+                reply=replyes.push(content)
               end
             end
             reply=replyes.join("\n")
