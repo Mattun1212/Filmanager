@@ -118,20 +118,6 @@ body{
     color:#3A3532 !important;
 }
 
-.btn{
-  display:block;
-  width:70px;
-  height:70px;
-  margin:1em auto;
-  line-height:70px;
-  background:gray;
-  border-radius:100%;
-  color:#fff;
-  font-size:10px;
-  font-weight:bold;
-  text-decoration:none;
-  text-align:center;
-}
 
 
 /*.bottom {*/
