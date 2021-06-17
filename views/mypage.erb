@@ -56,11 +56,11 @@
 					<div class = "card align-items-center col-sm-5 col-md-4 col-lg-3  col-xl-2 m-2 content">
 						<div class="card-body">
 							<%if movie[0].length>=25%>
-								<p class="font-small text-center"><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>
+								<p class="font-small text-center"><a href="https://www.unitedcinemas.jp/<%=movie[2]%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>
 							<% elsif movie[0].length>=15%>
-								<p class="font-mid text-center"><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>
+								<p class="font-mid text-center"><a href="https://www.unitedcinemas.jp/<%=movie[2]%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>
 							<% else %>	
-								<p><a href="https://www.unitedcinemas.jp/<%=@theater%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>
+								<p><a href="https://www.unitedcinemas.jp/<%=movie[2]%>/film.php?film=<%=movie[1]%>" target="_blank" rel="noopener noreferrer"><%= movie[0] %></a></p>
 							<% end %>	
 							<p class="text-center"><img src='<%=movie[4]%>' class='img-fluid rounded' alt='thumb'></p>
 							<p><%=Theater.find_by(name: movie[2]).official%></p>
