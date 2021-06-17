@@ -59,7 +59,7 @@ body{
 /*}*/
 
 
-.container{
+.contain{
     display: flex;
 }
 
@@ -118,6 +118,22 @@ body{
     color:#3A3532 !important;
 }
 
+.btn{
+  display:block;
+  width:70px;
+  height:70px;
+  margin:1em auto;
+  line-height:70px;
+  background:gray;
+  border-radius:100%;
+  color:#fff;
+  font-size:10px;
+  font-weight:bold;
+  text-decoration:none;
+  text-align:center;
+}
+
+
 /*.bottom {*/
 /*    position: absolute;*/
 /*    right: 10px;*/
@@ -151,7 +167,20 @@ body{
     text-decoration: none;
 }
 
+.demo {
+    filter: drop-shadow(1px 1px 4px #3A3532);
+}
+
+.u-line {
+    background: linear-gradient(transparent 87%, #F0F4BC 87%);
+}
+
+
 h3 {
+    font-family: 'cinecaption' !important;
+}
+
+.feature {
     font-family: 'cinecaption' !important;
 }
 
@@ -167,4 +196,13 @@ h3 {
 
 .card-footer-text{
     background-color:#F3F3F3;
+}
+
+.large{
+    font-size: 2.8rem;
+}
+
+.block {
+    display: block;
+    width: 100%;
 }
