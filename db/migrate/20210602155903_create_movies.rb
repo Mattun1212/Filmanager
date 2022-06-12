@@ -4,7 +4,7 @@ class CreateMovies < ActiveRecord::Migration[6.1]
       t.string :title
       t.integer :movie_id
       t.string :theater
-      t.string :finish, default: ''
+      t.date :finish, default: ''
       t.timestamps null: false
     end
   end

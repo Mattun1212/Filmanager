@@ -11,30 +11,24 @@ module Everyday
        Movie.create(title: movie[0], movie_id: movie[1], theater: theater.name)
       end
       if movie[2]
-       Movie.find_by(title: movie[0], movie_id: movie[1], theater: theater.name).update(finish: movie[2])
+       formatteddate = Date.today
+       datearray = movie[2].split('/')
+       formatteddate.month = datearray[0]
+       formatteddate.day = datearray[1]
+       Movie.find_by(title: movie[0], movie_id: movie[1], theater: theater.name).update(finish: formatteddate)
       end
     end
     
     
     today = Date.today
-    dates = Movie.all
-    dates.each do |date|
-     if date.finish.present?
-      finish=date.finish.split('/')
-      if today.month==finish[0].to_i
-        if today.day > finish[1].to_i
-         if Subscription.find_by(movie_id: date.id).present?
-          Subscription.find_by(movie_id: date.id).destroy
-         end
-        end
-      elsif today.month >finish[0].to_i
-       if Subscription.find_by(movie_id: date.id).present?
-         Subscription.find_by(movie_id: date.id).destroy
-       end
-      end
+    finishedmovies = Movie.where("finish < ?", today)
+    finishedmovies.each do |fin|
+     if Subscription.find_by(movie_id: fin.id).present?
+       Subscription.find_by(movie_id: fin.id).destroy
      end
+     fin.destroy
     end
-    
+  
     
     @movies.each do |movie|
         movie[3]=theater.name

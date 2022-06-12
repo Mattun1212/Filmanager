@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2021_06_11_072556) do
     t.string "title"
     t.integer "movie_id"
     t.string "theater"
-    t.string "finish", default: ""
+    t.date "finish"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "detail", default: ""
