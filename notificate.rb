@@ -19,7 +19,7 @@ users.each do |user|
         subscriptions=User.find_by(line_id: user_id).movies
         subscriptions.each do |subscription|
          if subscription.finish.present?
-            finish=subscription.finish.month+'/'+subscription.finish.day+'終了'
+            finish=subscription.finish.month.to_s+'/'+subscription.finish.day.to_s+'終了'
             theater='('+ Theater.find_by(name: subscription.theater).official+')'
             content = +theater+finish
             message = {
