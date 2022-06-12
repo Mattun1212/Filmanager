@@ -12,10 +12,8 @@ module Everyday
       end
       if movie[2]
        date = Date.today
-       
        datearray = movie[2].split('/')
-       puts datearray[1]
-       formatteddate = Date.new(date.year, datearray[0], datearray[1])
+       formatteddate = Date.new(date.year, datearray[0].to_i, datearray[1].to_i)
        Movie.find_by(title: movie[0], movie_id: movie[1], theater: theater.name).update(finish: formatteddate)
       end
     end
