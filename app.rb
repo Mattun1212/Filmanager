@@ -80,9 +80,10 @@ post '/callback' do
             subscriptions=User.find_by(line_id: userId).movies
             subscriptions.each do |subscription|
               if subscription.finish.present?
-               # finish=subscription.finish.month+'/'+subscription.finish.day+'終了'
-              #  theater='('+ Theater.find_by(name: subscription.theater).official+')'
-                content = 'a'
+              #  finish=subscription.finish.month+'/'+subscription.finish.day+'終了'
+                finish='終了'
+                theater='('+ Theater.find_by(name: subscription.theater).official+')'
+                content = subscription.title.strip+theater+finish
                 replyes.push(content)
               end
             end
