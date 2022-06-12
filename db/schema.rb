@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_11_072556) do
+ActiveRecord::Schema.define(version: 2022_06_12_131706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,12 +19,12 @@ ActiveRecord::Schema.define(version: 2021_06_11_072556) do
     t.string "title"
     t.integer "movie_id"
     t.string "theater"
-    t.date "finish"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "detail", default: ""
     t.string "img", default: "no_img.png"
     t.string "youtube", default: ""
+    t.date "finish"
   end
 
   create_table "subscriptions", force: :cascade do |t|
