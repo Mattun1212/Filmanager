@@ -70,7 +70,7 @@ post '/callback' do
             subscriptions.each do |subscription|
               theater='('+ Theater.find_by(name: subscription.theater).official+')'
               content = subscription.title.strip+theater
-              replyes.push(subscription.title.strip)
+              replyes.push(content)
             end
             reply=replyes.join("\n")
             message.push({
