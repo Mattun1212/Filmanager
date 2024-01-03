@@ -162,7 +162,6 @@ DEPENDENCIES
   fastri
   line-bot-api
   nokogiri
-  omniauth
   omniauth-line
   open-uri
   pg (~> 1.2)
