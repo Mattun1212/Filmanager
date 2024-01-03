@@ -13,6 +13,7 @@ gem 'sinatra-contrib', '~> 2.1'
 gem 'webrick', '~> 1.7'
 gem 'nokogiri'
 gem 'open-uri'
+gem 'omniauth'
 gem 'omniauth-line'
 gem "line-bot-api"
 

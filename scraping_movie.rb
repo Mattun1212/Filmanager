@@ -12,4 +12,3 @@ module Scraping_movie
   return m_data
  end
 end
-

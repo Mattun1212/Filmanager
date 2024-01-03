@@ -124,16 +124,7 @@ get '/' do
     @theaters = Theater.all
     @theater = User.find(session[:user]).my_theater
     subscriptions = User.find(session[:user]).movies
-    # url='https://www.unitedcinemas.jp/'+@theater+'/daily.php'
-    # @movies = Scraping_on_screen.load_schedule_data(url)
-    # @movies.each do |movie|
-    #   unless Movie.find_by(title: movie[0],theater: @theater)
-    #   Movie.create(title: movie[0], movie_id: movie[1], theater: @theater)
-    #   end
-    #   if movie[2]
-    #     Movie.find_by(title: movie[0]).update(finish: movie[2])
-    #   end
-    # end
+
     @movies=[]
     todays = Today.all
     todays.each do |today|
