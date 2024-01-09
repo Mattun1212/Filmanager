@@ -46,30 +46,7 @@ post '/callback' do
     if event.is_a?(Line::Bot::Event::Message)
       if event.type === Line::Bot::Event::MessageType::Text
         message=[]
-        uid=User.find_by(line_id: event['source']['userId'])
-        if uid.nil?
-         if varidate_email(event.message['text'])
-          user=User.find_by(mail: event.message['text'])
-          if user.nil?
-            message.push({
-            type: 'text',
-            text: 'ユーザが見つけられませんでした'
-            })
-          else
-           User.find_by(mail: event.message['text']).update_columns(line_id: userId)
-            message.push({
-              type: 'text',
-              text: user.name+'さん、よろしくお願いします。'
-            })
-          end
-         else
-          message.push({
-            type: 'text',
-            text: 'メールアドレスを入力してください'
-          })
-         end
-        else
-          if event.message['text'] == '登録した映画'
+          if event.message['text'] == '>登録した映画'
             replyes=[]
             subscriptions = User.find_by(line_id: userId).movies
             subscriptions.each do |subscription|
@@ -82,7 +59,7 @@ post '/callback' do
               type: 'text',
               text: reply
             })
-          elsif event.message['text'] == 'もうすぐ終了する映画'
+          elsif event.message['text'] == '>もうすぐ終了する映画'
             replyes=[]
             subscriptions=User.find_by(line_id: userId).movies
             subscriptions.each do |subscription|
@@ -112,7 +89,6 @@ post '/callback' do
               })
             end
           end
-        end
         client.reply_message(event['replyToken'], message)
       end
     end
