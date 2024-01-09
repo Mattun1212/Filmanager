@@ -223,43 +223,6 @@ get '/signup' do
   end
 end
 
-# post '/signin' do
-#   user = User.find_by(mail: params[:mail])
-#   if user && user.authenticate(params[:password])
-#         session[:user] = user.id
-#         redirect '/'
-#   end
-#   @miss="メールアドレスかパスワードに誤りがあります"
-#   erb :sign_in
-# end
-
-# post '/signup' do
-#   @theaters = Theater.all
-#   unless User.find_by(mail: params[:mail])
-#     @user = User.create(name: params[:name], mail: params[:mail], my_theater: params[:theater], password: params[:password], password_confirmation: params[:password_confirmation])
-#     if @user.persisted?
-#         session[:user] = @user.id
-#         redirect '/'
-#     end
-    
-#       if params[:password] == params[:password_confirmation]
-#         @miss="不適切なパスワードです"
-#       else 
-#         @miss="パスワードが一致していません"
-#       end
-      
-#       pattern = /\A.+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+\z/
-#       matched = params[:mail].match(pattern)
-#       unless matched
-#         @miss="メールアドレスが正しくありません"
-#       end
-      
-#       erb :sign_up
-#   else
-#     @miss="すでに登録されたメールアドレスです"
-#     erb :sign_up
-#   end
-# end
 
 get '/auth/line/callback' do
   auth_info = env['omniauth.auth']
@@ -269,10 +232,12 @@ get '/auth/line/callback' do
   user_id = auth_info.uid          # LINEのユーザーID
   profile_pic = auth_info.info.image # プロフィール画像のURL
 
-  # ユーザーデータベースの検索または新規作成
-  user = User.find_or_create_by(line_id: user_id) do |u|
-    u.line_name = user_name
-    u.line_icon_url = profile_pic
+  
+  user = User.find_by(line_id: user_id)
+  if user
+    user.update(line_name: user_name, line_icon_url: profile_pic)
+  else
+    user = User.create(line_id: user_id, line_name: user_name, line_icon_url: profile_pic)
   end
   
   # セッションにユーザーIDを保存
