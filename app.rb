@@ -75,19 +75,6 @@ post '/callback' do
               type: 'text',
               text: reply
             })
-          else
-            user=User.find_by(mail: event.message['text'])
-            if user.present?
-              message.push({
-               type: 'text',
-               text: 'こんにちは'+user.name+'さん'
-              })
-            else 
-              message.push({
-               type: 'text',
-               text: 'まずは私に登録したメールアドレスを教えてください。'
-              })
-            end
           end
         client.reply_message(event['replyToken'], message)
       end
