@@ -3,13 +3,9 @@ class User < ActiveRecord::Base
     belongs_to :theater
     has_many :subscriptions
     has_many :movies, :through => :subscriptions
-    has_secure_password
     validates :mail,
-        presence: true,
-        format: {with:/\A.+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+\z/}
-    validates :password,
-        format: {with:/(?=.*?[a-z])(?=.*?[0-9])/},
-        length: {minimum: 5}
+        format: {with:/\A.+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+\z/},
+        allow_blank: true
 end
 
 class Theater < ActiveRecord::Base

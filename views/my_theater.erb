@@ -19,9 +19,6 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent"> 
             <ul class="navbar-nav">
-                <li class="nav-item active float-end nav-textcolor">
-                    <a class="nav-link active" href="/signin">Sign in</a>
-                </li>
             </ul>
         </div>
     </nav>
@@ -32,45 +29,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-<h1 class="title my-3 text-center">Sign up</h1>
+<h1 class="title my-3 text-center">映画館登録</h1>
 <% if @miss.present? %>
-<p class="my-1 text-center alert"><%=@miss%></p>
+<p class="my-1 text-center">最寄りの映画館を選んでください</p>
 <% end%>
 <div class="container-fluid">
       <div class="row justify-content-center">
         <div class="card my-2 align-items-center signup">
           <div class="card-body">
-            <form action="/signup" method="post" id="form">
-                <p>
-                  <img src='filmanager.png' width="75" height="75" alt='lineQR' class="d-block mx-auto">
-                </p>
+            <form action="/mytheater" method="post" id="form">
                 <p class="login">
-                    <input type="text" name="name" placeholder="name" class="form-control login" required>
-                </p>
-                <p class="login"> 
-                    <input type="text" name="mail" placeholder="mail_address" class="form-control login" required>
-                </p>
-                <p class="login">
-                    <select name="theater" class="form-control login" required>
+                    <select name="mytheater" class="form-control login" required>
                         <option disabled selected value>Choose My Theater</option>
                     <% @theaters.each do |theater| %>
                         <option value="<%= theater.name %>"><%= theater.official %></option>
                     <% end %>
                     </select>
                 </p>
-                <p class="login">
-                    <input type="password" name="password" placeholder="Password (英数字を含め5文字以上)" class="form-control login" required>
-                </p>
-                <p class="login">
-                    <input type="password" name="password_confirmation" placeholder="Password Again" class="form-control login" required>
-                </p>
                 <p>
-                    <input type="submit" value="Sign up" class="form-control login submit">
+                    <input type="submit" value="登録" class="form-control login submit">
                 </p>
             </form>
           </div>
         </div>
       </div>
 </div>
+<script>
+
+</script>
 </body>
 </html>

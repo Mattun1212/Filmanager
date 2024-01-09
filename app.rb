@@ -4,14 +4,19 @@ require 'sinatra/reloader' if development?
 require './models.rb'
 require './scraping_on_screen.rb'
 require './update_on_screen.rb'
-# require './scraping_movie.rb'
-Dotenv.load
-enable :sessions
 
-# before do
-#   Movie.update_all(img: 'noimage.png')
-#   Today.update_all(img: 'noimage.png')
-# end
+Dotenv.load
+
+set :sessions, true
+before do
+  session[:csrf] ||= SecureRandom.hex(64)
+end
+
+
+use OmniAuth::Builder do
+  provider :line, ENV["LINE_CHANNEL_LOGIN_ID"], ENV["LINE_CHANNEL_LOGIN_SECRET"]
+end
+
 
 def client
   @client ||= Line::Bot::Client.new { |config|
@@ -21,13 +26,13 @@ def client
   }
 end
 
-def varidate_email(address)
-  if address.match(/\A.+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+\z/)
-    return true
-  else
-    return false
-  end
-end
+# def varidate_email(address)
+#   if address.match(/\A.+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+\z/)
+#     return true
+#   else
+#     return false
+#   end
+# end
 
 post '/callback' do
   body = request.body.read
@@ -115,16 +120,13 @@ post '/callback' do
   "OK"
 end
 
-
-
 get '/' do
   unless session[:user] 
     erb :top
   else
     @theaters = Theater.all
-    @theater = User.find(session[:user]).my_theater
-    subscriptions = User.find(session[:user]).movies
-
+    @theater = User.find_by(line_id: session[:user]).my_theater
+    subscriptions = User.find_by(line_id: session[:user]).movies
     @movies=[]
     todays = Today.all
     todays.each do |today|
@@ -165,30 +167,23 @@ end
 
 post '/add/:id' do
   if session[:user]
+    user = User.find_by(line_id: session[:user])
     @theaters = Theater.all
     @theater = params[:theater]
     id = Movie.find_by(movie_id: params[:id], theater: @theater).id
-    unless Subscription.find_by(user_id: session[:user], movie_id: id)
-      Subscription.create(user_id: session[:user], movie_id: id, theater: @theater)
+    unless Subscription.find_by(user_id: user.id, movie_id: id)
+      Subscription.create(user_id: user.id, movie_id: id, theater: @theater)
     end
   end
-  # @movies=[]
-  # todays = Today.all
-  #   todays.each do |today|
-  #     if today.theater == @theater
-  #     row = [today.title, today.movie_id, today.finish, @theater, today.img]
-  #     @movies.push(row)
-  #     end
-  #   end
-  #   erb :index
   redirect '/'
 end
 
 post '/delete/:id' do
   if session[:user]
+    user = User.find_by(line_id: session[:user])
     theater = params[:theater]
     id = Movie.find_by(movie_id: params[:id], theater: theater).id
-    Subscription.find_by(user_id: session[:user], movie_id: id).destroy
+    Subscription.find_by(user_id: user.id, movie_id: id).destroy
   end
   if params[:page] == "mypage"
     redirect '/mypage'
@@ -200,7 +195,7 @@ end
 get '/mypage' do
   if session[:user]
     @my_movies = []
-    subscriptions = User.find(session[:user]).movies
+    subscriptions = User.find_by(line_id: session[:user]).movies
     subscriptions.each do |subscription|
      movie_param=[subscription.title, subscription.movie_id, subscription.theater, subscription.finish, subscription.img]
      @my_movies.append(movie_param)
@@ -211,9 +206,9 @@ get '/mypage' do
   end
 end
 
-get '/signin' do
+get '/signin'do
   unless session[:user]
-   erb :sign_in 
+   erb :sign_in
   else
     redirect '/'
   end
@@ -228,45 +223,94 @@ get '/signup' do
   end
 end
 
-post '/signin' do
-   user = User.find_by(mail: params[:mail])
-   if user && user.authenticate(params[:password])
-        session[:user] = user.id
-        redirect '/'
-   end
-   @miss="メールアドレスかパスワードに誤りがあります"
-   erb :sign_in
-end
+# post '/signin' do
+#   user = User.find_by(mail: params[:mail])
+#   if user && user.authenticate(params[:password])
+#         session[:user] = user.id
+#         redirect '/'
+#   end
+#   @miss="メールアドレスかパスワードに誤りがあります"
+#   erb :sign_in
+# end
 
-post '/signup' do
-  @theaters = Theater.all
-  unless User.find_by(mail: params[:mail])
-    @user = User.create(name: params[:name], mail: params[:mail], my_theater: params[:theater], password: params[:password], password_confirmation: params[:password_confirmation])
-    if @user.persisted?
-        session[:user] = @user.id
-        redirect '/'
-    end
+# post '/signup' do
+#   @theaters = Theater.all
+#   unless User.find_by(mail: params[:mail])
+#     @user = User.create(name: params[:name], mail: params[:mail], my_theater: params[:theater], password: params[:password], password_confirmation: params[:password_confirmation])
+#     if @user.persisted?
+#         session[:user] = @user.id
+#         redirect '/'
+#     end
     
-      if params[:password] == params[:password_confirmation]
-        @miss="不適切なパスワードです"
-      else 
-        @miss="パスワードが一致していません"
-      end
+#       if params[:password] == params[:password_confirmation]
+#         @miss="不適切なパスワードです"
+#       else 
+#         @miss="パスワードが一致していません"
+#       end
       
-      pattern = /\A.+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+\z/
-      matched = params[:mail].match(pattern)
-      unless matched
-        @miss="メールアドレスが正しくありません"
-      end
+#       pattern = /\A.+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+\z/
+#       matched = params[:mail].match(pattern)
+#       unless matched
+#         @miss="メールアドレスが正しくありません"
+#       end
       
-      erb :sign_up
+#       erb :sign_up
+#   else
+#     @miss="すでに登録されたメールアドレスです"
+#     erb :sign_up
+#   end
+# end
+
+get '/auth/line/callback' do
+  auth_info = env['omniauth.auth']
+
+  # ユーザー情報の取得（例: ユーザー名、ユーザーID、プロフィール画像URL）
+  user_name = auth_info.info.name  # LINEのユーザー名
+  user_id = auth_info.uid          # LINEのユーザーID
+  profile_pic = auth_info.info.image # プロフィール画像のURL
+
+  # ユーザーデータベースの検索または新規作成
+  user = User.find_or_create_by(line_id: user_id) do |u|
+    u.line_name = user_name
+    u.line_icon_url = profile_pic
+  end
+  
+  # セッションにユーザーIDを保存
+  session[:user] = user.line_id
+  # ユーザーをホームページにリダイレクト
+  if user.my_theater == nil
+    redirect to('/mytheater')
   else
-    @miss="すでに登録されたメールアドレスです"
-    erb :sign_up
+    redirect to('/')
   end
 end
 
+get '/auth/failure' do
+  @reason = params['message'] || "不明なエラー"
+  erb :failure
+end
+
+get '/mytheater' do
+  if session[:user]
+    user = User.find_by(line_id: session[:user])
+    unless user.my_theater
+      @theaters = Theater.all
+      erb :my_theater
+    else
+      redirect to('/')
+    end
+  else
+    redirect to('/')
+  end
+end
+
+post '/mytheater' do
+  user = User.find_by(line_id: session[:user])
+  user.update_columns(my_theater: params['mytheater'])
+  redirect to('/')
+end
+
 get '/signout' do
-  session[:user] = nil
+  session.delete(:user)
   redirect '/'
 end
