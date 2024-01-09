@@ -12,11 +12,9 @@ before do
   session[:csrf] ||= SecureRandom.hex(64)
 end
 
-
 use OmniAuth::Builder do
   provider :line, ENV["LINE_CHANNEL_LOGIN_ID"], ENV["LINE_CHANNEL_LOGIN_SECRET"]
 end
-
 
 def client
   @client ||= Line::Bot::Client.new { |config|
@@ -25,14 +23,6 @@ def client
     config.channel_token = ENV["LINE_CHANNEL_TOKEN"]
   }
 end
-
-# def varidate_email(address)
-#   if address.match(/\A.+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+\z/)
-#     return true
-#   else
-#     return false
-#   end
-# end
 
 post '/callback' do
   body = request.body.read
@@ -189,23 +179,20 @@ end
 
 get '/auth/line/callback' do
   auth_info = env['omniauth.auth']
+  user_name = auth_info.info.name  
+  user_id = auth_info.uid         
+  profile_pic = auth_info.info.image
 
-  # ユーザー情報の取得（例: ユーザー名、ユーザーID、プロフィール画像URL）
-  user_name = auth_info.info.name  # LINEのユーザー名
-  user_id = auth_info.uid          # LINEのユーザーID
-  profile_pic = auth_info.info.image # プロフィール画像のURL
-
-  
   user = User.find_by(line_id: user_id)
   if user
     user.update(line_name: user_name, line_icon_url: profile_pic)
   else
     user = User.create(line_id: user_id, line_name: user_name, line_icon_url: profile_pic)
+    message = user_name + "様、初めまして。私Filmanagerと申します。これからよろしくお願い致します。\nご主人様が登録された映画の終了予定日が決まり次第毎朝お知らせ致します。"
+    client.push_message(user_id, message)
   end
   
-  # セッションにユーザーIDを保存
   session[:user] = user.line_id
-  # ユーザーをホームページにリダイレクト
   if user.my_theater == nil
     redirect to('/mytheater')
   else
