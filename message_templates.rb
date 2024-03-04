@@ -17,7 +17,6 @@ def create_flex_message(subscriptions, filter_finish_soon: false)
   }
 end
 
-
 def create_bubble(subscription)
     hero_section = if subscription.img == 'no_img.png'
                    {
