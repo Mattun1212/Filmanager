@@ -7,14 +7,14 @@ module Thumb
       
       movie = Movie.find_or_initialize_by(movie_id: today.movie_id, theater: today.theater)
       
-      # 有効な画像URLを他のレコードから再利用
       if valid_images_cache[today.movie_id]
         movie.img = valid_images_cache[today.movie_id]
       else
+        m_url = "https://www.unitedcinemas.jp/#{today.theater}/film.php?film=#{today.movie_id}"
         info = Scraping_movie.load_movie_data(m_url)
         next unless info[1].present? && valid_image_url?(info[1].strip)
         movie.img = info[1].strip
-        valid_images_cache[today.movie_id] = info[1].strip # キャッシュを更新
+        valid_images_cache[today.movie_id] = info[1].strip 
       end
       
       movie.save if movie.changed?
