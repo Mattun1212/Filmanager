@@ -4,12 +4,17 @@ module Everyday
       url = "https://www.unitedcinemas.jp/#{theater.name}/daily.php"
       movies = Scraping_on_screen.load_schedule_data(url)
       
+      Today.where(theater: theater.name).delete_all
+
       movies.each do |movie|
         formatted_date = format_date(movie[2])
         movie_record = Movie.find_or_create_by(title: movie[0], movie_id: movie[1], theater: theater.name)
         movie_record.update(finish: formatted_date) if formatted_date
         
-        Today.create(title: movie[0], movie_id: movie[1], finish: movie[2], theater: theater.name, img: movie_record.img)
+        Today.find_or_create_by(title: movie[0], movie_id: movie[1], theater: theater.name) do |today|
+          today.finish = movie[2]
+          today.img = movie_record.img
+        end
       end
     end
     
