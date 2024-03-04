@@ -1,35 +1,38 @@
 module Everyday
-  def self.update_on_screen_data
-    Theater.all.each do |theater|
-      url = "https://www.unitedcinemas.jp/#{theater.name}/daily.php"
-      movies = Scraping_on_screen.load_schedule_data(url)
-      
-      movies.each do |movie|
-        formatted_date = format_date(movie[2])
-        movie_record = Movie.find_or_create_by(title: movie[0], movie_id: movie[1], theater: theater.name)
-        movie_record.update(finish: formatted_date) if formatted_date
-        
-        Today.create(title: movie[0], movie_id: movie[1], finish: movie[2], theater: theater.name, img: movie_record.img)
+ def self.update_on_screen_data
+    @theaters=Theater.all
+    Today.destroy_all
+    @theaters.each do |theater|
+    url='https://www.unitedcinemas.jp/'+theater.name+'/daily.php'
+    @movies = Scraping_on_screen.load_schedule_data(url)
+    
+    @movies.each do |movie|
+      unless Movie.find_by(title: movie[0], movie_id: movie[1],theater: theater.name)
+       Movie.create(title: movie[0], movie_id: movie[1], theater: theater.name)
+      end
+      if movie[2]
+       date = Date.today
+       datearray = movie[2].split('/')
+       formatteddate = Date.new(date.year, datearray[0].to_i, datearray[1].to_i)
+       Movie.find_by(title: movie[0], movie_id: movie[1], theater: theater.name).update(finish: formatteddate)
       end
     end
     
-    cleanup_finished_movies
-  end
-
-  private
-
-  def self.format_date(date_string)
-    return nil unless date_string
-    date_array = date_string.split('/')
-    Date.new(Date.today.year, date_array[0].to_i, date_array[1].to_i)
-  rescue ArgumentError
-    nil
-  end
-
-  def self.cleanup_finished_movies
-    Movie.where("finish < ?", Date.today).each do |movie|
-      Subscription.where(movie_id: movie.id).destroy_all
-      movie.destroy
+    
+    today = Date.today
+    finishedmovies = Movie.where("finish < ?", today)
+    finishedmovies.each do |fin|
+     if Subscription.find_by(movie_id: fin.id).present?
+       Subscription.find_by(movie_id: fin.id).destroy
+     end
+     fin.destroy
     end
-  end
+  
+    
+    @movies.each do |movie|
+        movie[3]=theater.name
+        Today.create(title: movie[0], movie_id: movie[1], finish: movie[2] ,theater: movie[3])
+       end
+    end
+ end
 end

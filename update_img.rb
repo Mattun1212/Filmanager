@@ -6,7 +6,6 @@ module Thumb
         info = Scraping_movie.load_movie_data(m_url)
         movie = Movie.find_by(movie_id: today.movie_id, theater: today.theater)
         next unless info[1].present? && info[1].strip != "no_img.png"
-        
         movie.update(img: info[1].strip) if movie.img == "no_img.png" || !valid_image_url?(movie.img)
         today.update(img: movie.img)
       rescue => e
