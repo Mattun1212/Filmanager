@@ -4,6 +4,7 @@ require 'sinatra/reloader' if development?
 require './models.rb'
 require './scraping_on_screen.rb'
 require './update_on_screen.rb'
+require './handle_message.rb'
 
 Dotenv.load
 
@@ -32,42 +33,11 @@ post '/callback' do
   end
   events = client.parse_events_from(body)
   events.each do |event|
-    userId = event['source']['userId']
-    if event.is_a?(Line::Bot::Event::Message)
-      if event.type === Line::Bot::Event::MessageType::Text
-        message=[]
-          if event.message['text'] == '>登録した映画'
-            replyes=[]
-            subscriptions = User.find_by(line_id: userId).movies
-            subscriptions.each do |subscription|
-              theater='('+ Theater.find_by(name: subscription.theater).official+')'
-              content = subscription.title.strip+theater
-              replyes.push(content)
-            end
-            reply=replyes.join("\n")
-            message.push({
-              type: 'text',
-              text: reply
-            })
-          elsif event.message['text'] == '>もうすぐ終了する映画'
-            replyes=[]
-            subscriptions=User.find_by(line_id: userId).movies
-            subscriptions.each do |subscription|
-              if subscription.finish.present?
-                finish=subscription.finish.month.to_s+'/'+subscription.finish.day.to_s+'終了'
-                theater='('+ Theater.find_by(name: subscription.theater).official+')'
-                content = subscription.title.strip+theater+finish
-                replyes.push(content)
-              end
-            end
-            reply=replyes.join("\n")
-            message.push({
-              type: 'text',
-              text: reply
-            })
-          end
-        client.reply_message(event['replyToken'], message)
-      end
+    case event
+    when Line::Bot::Event::Message
+      handle_message_event(client, event)
+    when Line::Bot::Event::Postback
+      handle_postback_event(client, event)
     end
   end
   "OK"
@@ -96,7 +66,6 @@ get '/' do
     erb :index
   end
 end
-
 
 post '/index' do
   @theaters = Theater.all
@@ -188,8 +157,6 @@ get '/auth/line/callback' do
     user.update(line_name: user_name, line_icon_url: profile_pic)
   else
     user = User.create(line_id: user_id, line_name: user_name, line_icon_url: profile_pic)
-    message = user_name + "様、初めまして。私Filmanagerと申します。これからよろしくお願い致します。\nご主人様が登録された映画の終了予定日が決まり次第毎朝お知らせ致します。"
-    client.push_message(user_id, message)
   end
   
   session[:user] = user.line_id
@@ -222,6 +189,8 @@ end
 post '/mytheater' do
   user = User.find_by(line_id: session[:user])
   user.update_columns(my_theater: params['mytheater'])
+  message = user_name + "様、初めまして。私Filmanagerと申します。これからよろしくお願い致します。\nご主人様が登録された映画の終了予定日が決まり次第毎朝お知らせ致します。"
+  client.push_message(user.line_id, message)
   redirect to('/')
 end
 

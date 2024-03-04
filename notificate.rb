@@ -3,6 +3,7 @@ require './models.rb'
 require 'dotenv'
 Dotenv.load
 require 'line/bot'
+require './handle_message.rb'
 
 def client
   @client ||= Line::Bot::Client.new { |config|
@@ -12,22 +13,16 @@ def client
   }
 end
 
-users=User.all
-users.each do |user|
-    if user.line_id.present?
-        user_id = user.line_id
-        subscriptions=User.find_by(line_id: user_id).movies
-        subscriptions.each do |subscription|
-         if subscription.finish.present?
-            finish=subscription.finish.month.to_s+'/'+subscription.finish.day.to_s+'終了'
-            theater='('+ Theater.find_by(name: subscription.theater).official+')'
-            content = +theater+finish
-            message = {
-                        type: 'text',
-                        text: '「'+subscription.title.strip+'」の公開終了時期が迫っています！！'+content
-                      }
-            client.push_message(user_id, message)
-         end
-        end
-    end
+User.where.not(line_id: nil).each do |user|
+    subscriptions = user.movies.select { |movie| movie.finish.present? }
+    next if subscriptions.empty?
+
+    message = create_flex_message(subscriptions, filter_finish_soon: true)
+    greeting_message = {
+      type: 'text',
+      text: 'おはようございます、もうすぐ終了する映画をリマインドいたします。'
+    }
+
+    client.push_message(user.line_id, greeting_message)
+    client.push_message(user.line_id, message)
 end
