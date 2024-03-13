@@ -35,7 +35,7 @@ module Everyday
   end
 
   def self.cleanup_finished_movies
-  　modified_today_date = Date.today + 1
+    modified_today_date = Date.today + 1 #タイムゾーンの影響を解消するべく1日足す
     Movie.where("finish < ?", modified_today_date).each do |movie|
       Subscription.where(movie_id: movie.id).destroy_all
       movie.destroy
