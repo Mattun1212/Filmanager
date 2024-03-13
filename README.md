@@ -26,6 +26,6 @@ Filmanagerは、見たい映画の上映終了を逃さないようにするた�
 ## 技術スタック
 
 - **フレームワーク**: Ruby (Sinatra)
-- **データベース**: Postgres
+- **データベース**: PostgreSQL
 - **定期実行**: Heroku Scheduler
 - **スクレイピング**: Nokogiri
