@@ -9,14 +9,18 @@ require './handle_message.rb'
 Dotenv.load
 
 set :sessions, true
+
+#CSRFトークンを生成しsessionに保存
 before do
   session[:csrf] ||= SecureRandom.hex(64)
 end
 
+#LINEログイン使用のためOmniAuthを設定
 use OmniAuth::Builder do
   provider :line, ENV["LINE_CHANNEL_LOGIN_ID"], ENV["LINE_CHANNEL_LOGIN_SECRET"]
 end
 
+#LINE Bot APIクライアントの定義
 def client
   @client ||= Line::Bot::Client.new { |config|
     config.channel_id = ENV["LINE_CHANNEL_ID"]
@@ -25,6 +29,7 @@ def client
   }
 end
 
+#LINEからのコールバック時の処理
 post '/callback' do
   body = request.body.read
   signature = request.env['HTTP_X_LINE_SIGNATURE']
@@ -34,100 +39,16 @@ post '/callback' do
   events = client.parse_events_from(body)
   events.each do |event|
     case event
-    when Line::Bot::Event::Message
+    when Line::Bot::Event::Message #メッセージ受信時
       handle_message_event(client, event)
-    when Line::Bot::Event::Postback
+    when Line::Bot::Event::Postback #返信の受信時
       handle_postback_event(client, event)
     end
   end
   "OK"
 end
 
-get '/' do
-  unless session[:user] 
-    erb :top
-  else
-    @theaters = Theater.all
-    @theater = User.find_by(line_id: session[:user]).my_theater
-    subscriptions = User.find_by(line_id: session[:user]).movies
-    @movies=[]
-    todays = Today.all
-    todays.each do |today|
-      if today.theater == @theater
-        row = [today.title, today.movie_id, today.finish, today.theater, today.img]
-        subscriptions.each do |subscription|
-          if  subscription.title == today.title && subscription.theater == today.theater
-            row[5] = 'checked'
-          end
-        end
-        @movies.push(row)
-      end
-    end
-    erb :index
-  end
-end
-
-post '/index' do
-  @theaters = Theater.all
-  @theater = params[:theater]
-  @movies=[]
-  todays = Today.all
-  todays.each do |today|
-      if today.theater == @theater
-       row = [today.title, today.movie_id, today.finish, @theater, today.img]
-       @movies.push(row)
-      end
-  end
-  erb :index
-end
-
-get '/movie/:id' do
-   url='https://www.unitedcinemas.jp/all/film.php?film='+params[:id]
-   @movies = Scraping_movie.load_movie_data(url)
-   erb :movie
-end
-
-post '/add/:id' do
-  if session[:user]
-    user = User.find_by(line_id: session[:user])
-    @theaters = Theater.all
-    @theater = params[:theater]
-    id = Movie.find_by(movie_id: params[:id], theater: @theater).id
-    unless Subscription.find_by(user_id: user.id, movie_id: id)
-      Subscription.create(user_id: user.id, movie_id: id, theater: @theater)
-    end
-  end
-  redirect '/'
-end
-
-post '/delete/:id' do
-  if session[:user]
-    user = User.find_by(line_id: session[:user])
-    theater = params[:theater]
-    id = Movie.find_by(movie_id: params[:id], theater: theater).id
-    Subscription.find_by(user_id: user.id, movie_id: id).destroy
-  end
-  if params[:page] == "mypage"
-    redirect '/mypage'
-  else
-    redirect '/'
-  end
-end
-
-get '/mypage' do
-  if session[:user]
-    @my_movies = []
-    subscriptions = User.find_by(line_id: session[:user]).movies
-    subscriptions.each do |subscription|
-     movie_param=[subscription.title, subscription.movie_id, subscription.theater, subscription.finish, subscription.img]
-     @my_movies.append(movie_param)
-    end
-    erb :mypage
-  else
-    redirect '/'
-  end
-end
-
+#サインインページ表示
 get '/signin'do
   unless session[:user]
    erb :sign_in
@@ -136,16 +57,13 @@ get '/signin'do
   end
 end
 
-get '/signup' do
-  unless session[:user]
-   @theaters = Theater.all
-   erb :sign_up
-  else
-    redirect '/'
-  end
+#サインアウト処理
+get '/signout' do
+  session.delete(:user)
+  redirect '/'
 end
 
-
+#LINEログインのコールバック処理 LINEアカウントの情報からユーザ登録(id,名前,プロフ写真URL)
 get '/auth/line/callback' do
   auth_info = env['omniauth.auth']
   user_name = auth_info.info.name  
@@ -167,11 +85,13 @@ get '/auth/line/callback' do
   end
 end
 
+#LINEログイン失敗処理
 get '/auth/failure' do
   @reason = params['message'] || "不明なエラー"
   erb :failure
 end
 
+#マイシアターの登録
 get '/mytheater' do
   if session[:user]
     user = User.find_by(line_id: session[:user])
@@ -186,6 +106,7 @@ get '/mytheater' do
   end
 end
 
+#マイシアター登録に伴いユーザ登録完了後のメッセージ送信
 post '/mytheater' do
   user = User.find_by(line_id: session[:user])
   user.update_columns(my_theater: params['mytheater'])
@@ -194,7 +115,88 @@ post '/mytheater' do
   redirect to('/')
 end
 
-get '/signout' do
-  session.delete(:user)
-  redirect '/'
+#ルートパス
+get '/' do
+  unless session[:user] 
+    erb :top # ログイン時トップページを表示
+  else
+    #ユーザの映画の登録状況を取得・反映してマイシアターで上映中の映画の一覧表示
+    @theaters = Theater.all
+    @theater = session[:selected_theater] || User.find_by(line_id: session[:user]).my_theater
+    subscriptions = User.find_by(line_id: session[:user]).movies
+    @movies=[]
+    todays = Today.all
+    todays.each do |today|
+      if today.theater == @theater
+        row = [today.title, today.movie_id, today.finish, today.theater, today.img]
+        subscriptions.each do |subscription|
+          if  subscription.title == today.title && subscription.theater == today.theater
+            row[5] = 'checked'
+          end
+        end
+        @movies.push(row)
+      end
+    end
+    erb :index
+  end
+end
+
+#別の映画館の上映状況閲覧時の処理 ()
+post '/index' do
+  @theaters = Theater.all
+  @theater = params[:theater]
+  session[:selected_theater] = @theater
+  @movies=[]
+  todays = Today.all
+  todays.each do |today|
+      if today.theater == @theater
+       row = [today.title, today.movie_id, today.finish, @theater, today.img]
+       @movies.push(row)
+      end
+  end
+  erb :index
+end
+
+#映画登録時の処理
+post '/add/:id' do
+  if session[:user]
+    user = User.find_by(line_id: session[:user])
+    @theaters = Theater.all
+    @theater = params[:theater]
+    id = Movie.find_by(movie_id: params[:id], theater: @theater).id
+    unless Subscription.find_by(user_id: user.id, movie_id: id)
+      Subscription.create(user_id: user.id, movie_id: id, theater: @theater)
+    end
+  end
+  redirect "/?theater=#{session[:selected_theater]}"
+end
+
+#映画の登録を削除する処理
+post '/delete/:id' do
+  if session[:user]
+    user = User.find_by(line_id: session[:user])
+    theater = params[:theater]
+    id = Movie.find_by(movie_id: params[:id], theater: theater).id
+    Subscription.find_by(user_id: user.id, movie_id: id).destroy
+  end
+  if params[:page] == "mypage"
+    redirect '/mypage'
+  else
+    redirect "/?theater=#{session[:selected_theater]}"
+  end
+end
+
+#マイページ表示
+get '/mypage' do
+  if session[:user]
+    @my_movies = []
+    subscriptions = User.find_by(line_id: session[:user]).movies
+    subscriptions.each do |subscription|
+     movie_param=[subscription.title, subscription.movie_id, subscription.theater, subscription.finish, subscription.img]
+     @my_movies.append(movie_param)
+    end
+    erb :mypage
+  else
+    redirect '/'
+  end
 end
