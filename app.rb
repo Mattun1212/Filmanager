@@ -110,7 +110,7 @@ end
 post '/mytheater' do
   user = User.find_by(line_id: session[:user])
   user.update_columns(my_theater: params['mytheater'])
-  message = user_name + "様、初めまして。私Filmanagerと申します。これからよろしくお願い致します。\nご主人様が登録された映画の終了予定日が決まり次第毎朝お知らせ致します。"
+  message = "#{user.name}様、初めまして。私Filmanagerと申します。これからよろしくお願い致します。\nご主人様が登録された映画の終了予定日が決まり次第毎朝お知らせ致します。"
   client.push_message(user.line_id, message)
   redirect to('/')
 end

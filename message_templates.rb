@@ -1,3 +1,4 @@
+#LINE Flex Messageのテンプレート　filter_finish_soonで日付を赤文字にする
 def create_flex_message(subscriptions, filter_finish_soon: false)
   filtered_subscriptions = subscriptions
 
