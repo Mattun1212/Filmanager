@@ -6,7 +6,6 @@ module Everyday
       
        # 同じ日のデータを一旦削除
       Today.where(theater: theater.name).delete_all
-
       movies.each do |movie|
         formatted_date = format_date(movie[2])
         movie_record = Movie.find_or_create_by(title: movie[0], movie_id: movie[1], theater: theater.name)

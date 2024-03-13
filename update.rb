@@ -9,8 +9,8 @@ require './models.rb'
 require 'date'
 require 'net/http'
 
-Everyday.update_on_screen_data
-Thumb.update_img
+Everyday.update_on_screen_data #今日の上映情報を更新
+Thumb.update_img　#no_imgを回避するため同一のタイトルから画像を引き継ぎ
 
 #画像URLをうまく取得できなかった場合を回避、no_imgを設定
 no_imgs = Today.where(img: "no_img.png")
