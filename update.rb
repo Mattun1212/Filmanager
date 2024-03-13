@@ -10,8 +10,9 @@ require 'date'
 require 'net/http'
 
 Everyday.update_on_screen_data
-Thumb.update_img
+# Thumb.update_img
 
+#画像URLをうまく取得できなかった場合を回避、no_imgを設定
 no_imgs = Today.where(img: "no_img.png")
 no_imgs.each do |img|
  m_img = Movie.find_by(movie_id: img.movie_id, theater: img.theater)
